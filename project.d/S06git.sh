@@ -17,17 +17,16 @@ fi
 
 set +e
 
-set_svn_permissions() {
-    #$1 is the project name
-    find /var/svn/$1 -type f -exec chmod 660 {} \;
-    find /var/svn/$1 -type d -exec chmod 2770 {} \;
-    chown -R root:www-data $SVN_DIR/$1
-}
 
 case "$COMMAND" in
 #nothing for create_solr, delete_solr, external, local_files, local_db, local_private_db, copy_private_db, create_private_db, update_private_db or delete_private_db
 create)
-  echo "Creating SVN repository....."
+  #Create gitolite repo
+  #Checkout $PROJECT
+  #Change origin to new repo
+  #Push project to new repo
+  echo "Creating GIT repository....."
+
   svnadmin create $SVN_DIR/$PROJECT --fs-type fsfs
   svn mkdir -q -m "Creating subversion structure" file://$SVN_DIR/$PROJECT/trunk file://$SVN_DIR/$PROJECT/branches file://$SVN_DIR/$PROJECT/tags
   echo "Creating $WWW_DIR/$PROJECT/sites/$PROJECT.$DOMAIN dir..."

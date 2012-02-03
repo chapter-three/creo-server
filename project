@@ -4,15 +4,13 @@
 # This is the remote control for scripts found in project/
 # Modeled off of init.d
 
+. ../common.sh
+. ../shflags
 
-. /usr/local/scripts/common.sh
-. /usr/local/scripts/shflags
-
-set +e 
+set +e
 
 # main flags
-DEFINE_string  'template' "$DEFAULT_TEMPLATE" 'template to use when creating a new project - only useable with the create command' 't'
-DEFINE_string  'svn' ' none' '     external SVN url - only useable with the external command' 's'
+DEFINE_string template "$DEFAULT_TEMPLATE" 'template to use when creating a new project - only useable with the create command' t
 
 FLAGS_HELP="USAGE: $0 [flags] command project
 command can be one of:
@@ -23,7 +21,7 @@ backup:                    backup a project (aka archive)
 restore:                   restore a project from backup (aka unarchive)
 delete:                    deletes the project
 create_solr:               creates a project solr instance
-delete_solr:               deletes the project solr instance 
+delete_solr:               deletes the project solr instance
 external -s svn:           creates a new project from an external SVN
 
 other project-related commands (no root required):
@@ -47,7 +45,6 @@ eval set -- "${FLAGS_ARGV}"
 COMMAND=$1
 PROJECT=$2
 TEMPLATE=${FLAGS_template}
-SVN=${FLAGS_svn}
 DATESTAMP=`date +%Y%m%d%H%M%S`
 
 # check for valid commands
@@ -87,6 +84,6 @@ fi
 set -e
 
 for script in $( ls $SCRIPT_DIR/project.d/S* ) ; do
-    sh $script $* $TEMPLATE $DATESTAMP $SVN
+    sh $script $* $TEMPLATE $DATESTAMP $SVN $GIT
 done
 
