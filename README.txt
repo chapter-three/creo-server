@@ -1,5 +1,5 @@
 Creo Project
 
-Manages projects and user project sandboxes using MySQL, Apache, PHP, and git.
+Manages projects and user project sandboxes using MySQL, Apache, PHP, drush, and git.
 
 In the future, will support Pantheon projects and have a complete README.

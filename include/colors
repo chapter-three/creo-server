@@ -1,0 +1,45 @@
+# Creates color variables and echo_color funtion
+
+BLACK='\E[30;40m'
+RED='\E[31;40m'
+GREEN='\E[32;40m'
+YELLOW='\E[33;40m'
+BLUE='\E[34;40m'
+MAGENTA='\E[35;40m'
+CYAN='\E[36;40m'
+WHITE='\E[37;40m'
+RESET="\E[0m"
+
+#Color Echo ($message)
+echo_color () {
+  message=$1
+  echo -e "$message"$RESET
+
+  return
+}
+
+#Color message echo ($message, $type = "status")
+set_message () {
+  message=$1
+  if [ -z "$2" ] ; then
+    type="status"
+  else
+    type=$2
+  fi
+
+  case "$type" in
+    status)
+      echo_color $GREEN"$message"
+    ;;
+
+    warning)
+      echo_color $YELLOW"$message"
+    ;;
+
+    error)
+      echo_color $RED"$message"
+    ;;
+  esac
+
+  return
+}
