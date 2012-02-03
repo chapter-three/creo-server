@@ -1,20 +1,31 @@
-#!/bin/bash
+# Directory to store temporary files
+TMP_DIR=/tmp
 
-export SCRIPT_DIR=/usr/local/scripts
+# The Apache configuration directory (Note: This script uses Debian/Ubuntu specific functionality)
+APACHE_DIR=/etc/apache2
 
-export DEFAULT_DB_UN=chapter3
-export DEFAULT_DB_PW=LLC
+# The directory to store the web accessible clones of projects
+WWW_DIR=/var/www
 
-export TMP_DIR=/tmp
-export APACHE_DIR=/etc/apache2
-export WWW_DIR=/var/www
-export SVN_DIR=/var/svn
-export TRAC_DIR=/var/trac
-export BACKUP_DIR=/var/backups/codebase
-export ACQUIA_URL=
+# The user and group which will own all files/directories in $WWW_DIR.
+WWW_USER=root
+WWW_GROUP=www-data
 
-export MROOT=
-export MPASS=
+# Directory containing Trac installations
+TRAC_DIR=/var/trac
 
-#Uncomment the following for the rest of the servers (including hub):
-export DOMAIN=
+# The directory name within $TRAC_DIR to use as a template for new projects
+TRAC_TEMPLATE=templatetrac
+
+# Directory to store/restore backups to/from
+BACKUP_DIR=/var/backups/codebase
+
+# The root domain name to use for each project. Will be used in the form: project.DOMAIN.
+DOMAIN=chapterthree.com
+
+# MySQL username and password
+MYSQL_USERNAME=
+MYSQL_PASSWORD=
+
+# The user@host access string for use with Gitolite
+GITOLITE_REPO_ACCESS=git@localhost
