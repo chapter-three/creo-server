@@ -1,0 +1,20 @@
+#!/bin/bash
+
+export SCRIPT_DIR=/usr/local/scripts
+
+export DEFAULT_DB_UN=chapter3
+export DEFAULT_DB_PW=LLC
+
+export TMP_DIR=/tmp
+export APACHE_DIR=/etc/apache2
+export WWW_DIR=/var/www
+export SVN_DIR=/var/svn
+export TRAC_DIR=/var/trac
+export BACKUP_DIR=/var/backups/codebase
+export ACQUIA_URL=
+
+export MROOT=
+export MPASS=
+
+#Uncomment the following for the rest of the servers (including hub):
+export DOMAIN=
