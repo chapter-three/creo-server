@@ -19,7 +19,7 @@ case "$COMMAND" in
 
   delete)
     echo "Delete project $PROJECT?"
-    echo_color $YELLOW"Warning: - no backup is made in this action - make sure to backup the project first if you need a backup."
+    set_message "Warning: No backup is made. Be sure to backup the project first." warning
   ;;
 
   create_solr)
