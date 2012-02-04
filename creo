@@ -2,13 +2,38 @@
 # Stop on any errors
 set -e
 
+FLAGS_HELP="USAGE: creo command project
+
+Project commands (root required):
+create -t template:        creates a new project from template
+backup:                    backup a project (aka archive)
+restore:                   restore a project from backup (aka unarchive)
+delete:                    deletes the project
+create_solr:               creates a project solr instance
+delete_solr:               deletes the project solr instance
+
+Project commands (root not required):
+local_all:                 dumps a copy of the project (svn, non-svn, files, db and private sandbox db) for local development
+local_files:               dumps a copy of the project non-svn files
+local_db:                  dumps a copy of the project db
+local_private_db:          dumps a copy of the project private sandbox db
+
+Sandbox commands (root not required) - Private DB commands require a user sandbox:
+sandbox:                   creates a project sandbox
+create_private_db:         creates a new (blank) private sandbox database
+update_private_db:         updates a private sandbox database from the project database
+delete_private_db:         deletes a private sandbox database
+"
+
 # Get the script's current working directory: http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
 CWD="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-# Include color echo functions (echo_color, echo_status, echo_error)
+# Include color echo functions (echo_color, set_message)
 source $CWD/include/colors
+
+set_message "Creo Project v0.1 - Linux/Apache/MySQL/PHP/Solr/Trac/Drupal/Drush project manager"
 
 # Check if creo.conf exists
 if [ ! -e $CWD/creo.conf ]; then
@@ -33,31 +58,6 @@ eval set -- "${FLAGS_ARGV}"
 
 # Stop on any errors again. shflags can exit with error: http://code.google.com/p/shflags/issues/detail?id=9
 set -e
-
-FLAGS_HELP="USAGE: creo [flags] command project
-
-project-related commands (root required):
-create -t template:        creates a new project from template
-backup:                    backup a project (aka archive)
-restore:                   restore a project from backup (aka unarchive)
-delete:                    deletes the project
-create_solr:               creates a project solr instance
-delete_solr:               deletes the project solr instance
-
-other project-related commands (no root required):
-local_all:                 dumps a copy of the project (svn, non-svn, files, db and private sandbox db) for local development
-local_files:               dumps a copy of the project non-svn files
-local_db:                  dumps a copy of the project db
-local_private_db:          dumps a copy of the project private sandbox db
-export:                    exports a project
-
-sandbox-related commands (no root required) - all private db options assume a sandbox exists:
-sandbox:                   creates a project sandbox
-copy_private_db:           copies the project database to a private sandbox database
-create_private_db:         creates a new (blank) private sandbox database
-update_private_db:         updates a private sandbox database from the project database
-delete_private_db:         deletes a private sandbox database
-"
 
 # Make arguments and flags into useful variables
 COMMAND=$1

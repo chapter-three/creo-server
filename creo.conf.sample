@@ -1,7 +1,7 @@
 # Directory to store temporary files
 TMP_DIR=/tmp
 
-# The Apache configuration directory (Note: This script uses Debian/Ubuntu specific functionality)
+# The Apache configuration directory (Note: This script is Debian/Ubuntu specific
 APACHE_DIR=/etc/apache2
 
 # The directory to store the web accessible clones of projects
@@ -21,11 +21,18 @@ TRAC_TEMPLATE=templatetrac
 BACKUP_DIR=/var/backups/codebase
 
 # The root domain name to use for each project. Will be used in the form: project.DOMAIN.
-DOMAIN=chapterthree.com
+DOMAIN=
 
 # MySQL username and password
 MYSQL_USERNAME=
 MYSQL_PASSWORD=
 
+# Full path to run drush
+DRUSH_PATH=/usr/local/drush/drush.php
+
 # The user@host access string for use with Gitolite
 GITOLITE_REPO_ACCESS=git@localhost
+
+
+
+
