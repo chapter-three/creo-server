@@ -1,7 +1,7 @@
-# Directory to store temporary files
+# Directory to store temporary files/repos
 TMP_DIR=/tmp
 
-# The Apache configuration directory (Note: This script is Debian/Ubuntu specific
+# The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
 APACHE_DIR=/etc/apache2
 
 # The directory to store the web accessible clones of projects
@@ -33,6 +33,7 @@ DRUSH_PATH=/usr/local/drush/drush.php
 # The user@host access string for use with Gitolite
 GITOLITE_REPO_ACCESS=git@localhost
 
-
+# Directory for the gitolite-admin repo
+GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
 
 
