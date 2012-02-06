@@ -1,54 +1,43 @@
 
-delete_sandbox_tables() {
-  #$1 is the DB
-  TABLES=`echo "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '$1' AND table_name LIKE '%sandbox%'" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW`
-  for TABLE in $TABLES; do
-    if [ ! $TABLE = "table_name" ]; then
-      echo "Dropping Table $TABLE"
-      echo "DROP TABLE IF EXISTS $TABLE" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW $1
-    fi
-  done
-}
-
 backup_db() {
   #$1 is the DB name and $2 is the location to save the file
   #tests first to see if DB exists - mysqldump spits out an error if it doesn't
-  DBS=`mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW -Bse 'show databases'| egrep -v 'information_schema|mysql'`
+  DBS=`mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -Bse 'show databases'| egrep -v 'information_schema|mysql'`
   for db in $DBS; do
     if [ "$db" = "$1" ]; then
       echo "Existing DB $1 found, backing up to $2"
       #clear caches and dump all but user cache tables:
       drush -r /var/www/${1} cc all
-      mysqldump -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW $1 -r $2
+      mysqldump -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $1 -r $2
     fi
   done
 }
 
 create_db() {
   #$1 is the DB name
-  echo "DROP DATABASE IF EXISTS $1" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW
-  echo "CREATE DATABASE IF NOT EXISTS $1" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW
-  echo "GRANT ALL ON $1.* TO '$DEFAULT_DB_UN'@'localhost'; FLUSH PRIVILEGES;" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW
+  echo "DROP DATABASE IF EXISTS $1" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "CREATE DATABASE IF NOT EXISTS $1" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "GRANT ALL ON $1.* TO '$MYSQL_USERNAME'@'localhost'; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
 }
 
 copy_db() {
   #copies DB $1 to $2
-  mysqldump -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW $1 -r $TMP_DIR/$1.sql
-  echo "CREATE DATABASE IF NOT EXISTS $2" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW
-  mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW -D$2 < $TMP_DIR/$1.sql
+  mysqldump -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $1 -r $TMP_DIR/$1.sql
+  echo "CREATE DATABASE IF NOT EXISTS $2" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -D$2 < $TMP_DIR/$1.sql
   rm $TMP_DIR/$1.sql
 }
 
 drop_db() {
   #$1 is DB name
-  echo "DROP DATABASE IF EXISTS $1" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW
-  echo "USE mysql ; DELETE FROM db WHERE Db='$1'; FLUSH PRIVILEGES;" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW
+  echo "DROP DATABASE IF EXISTS $1" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "USE mysql ; DELETE FROM db WHERE Db='$1'; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
 }
 
 copy_table() {
   #$1 is the project and $2 is the table name
-  if [ `echo "SELECT * FROM information_schema.tables WHERE table_schema = '$1' AND table_name = '$2'" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW` ]; then
-    echo "CREATE TABLE IF NOT EXISTS ${USER}_sandbox_${2} LIKE $2" | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW $1
+  if [ `echo "SELECT * FROM information_schema.tables WHERE table_schema = '$1' AND table_name = '$2'" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD` ]; then
+    echo "CREATE TABLE IF NOT EXISTS ${USER}_sandbox_${2} LIKE $2" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $1
   fi
 }
 
@@ -65,7 +54,6 @@ case "$COMMAND" in
     echo "Rolling up DB....."
     mkdir -p $BACKUP_DIR/$PROJECT
     copy_db $PROJECT scratch
-    delete_sandbox_tables scratch
     backup_db scratch $BACKUP_DIR/$PROJECT/$PROJECT.sql
     gzip $BACKUP_DIR/$PROJECT/$PROJECT.sql
     drop_db scratch
@@ -75,14 +63,13 @@ case "$COMMAND" in
     backup_db $PROJECT $HOME/${PROJECT}_${DATESTAMP}.sql
     echo "Rolling down DB....."
     create_db $PROJECT
-    gunzip -c $BACKUP_DIR/$PROJECT/$PROJECT.sql.gz | mysql -u $DEFAULT_DB_UN -p$DEFAULT_DB_PW $PROJECT
+    gunzip -c $BACKUP_DIR/$PROJECT/$PROJECT.sql.gz | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $PROJECT
   ;;
 
   local_all)
     echo "Exporting DB...."
     mkdir -p $HOME/${PROJECT}-${COMMAND}
     copy_db $PROJECT scratch
-    delete_sandbox_tables scratch
     backup_db scratch $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${DATESTAMP}.sql
     backup_db ${PROJECT}_${USER} $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${USER}_${DATESTAMP}.sql
     drop_db scratch
@@ -96,7 +83,6 @@ case "$COMMAND" in
     echo "Exporting DB...."
     mkdir -p $HOME/${PROJECT}-${COMMAND}
     copy_db $PROJECT scratch
-    delete_sandbox_tables scratch
     backup_db scratch $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${DATESTAMP}.sql
     drop_db scratch
   ;;
@@ -113,9 +99,6 @@ case "$COMMAND" in
   ;;
 
   sandbox)
-    copy_table $PROJECT 'cache'
-    copy_table $PROJECT 'cache_menu'
-    copy_table $PROJECT 'cache_admin_menu'
   ;;
 
   copy_private_db)

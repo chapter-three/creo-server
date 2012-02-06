@@ -56,7 +56,7 @@ DEFINE_string template "$DEFAULT_TEMPLATE" 'template to use when creating a new 
 FLAGS "$@" || exit $?
 eval set -- "${FLAGS_ARGV}"
 
-# Stop on any errors again. shflags can exit with error: http://code.google.com/p/shflags/issues/detail?id=9
+# Stop on any errors again. shflags can exit incorrectly with error: http://code.google.com/p/shflags/issues/detail?id=9
 set -e
 
 # Make arguments and flags into useful variables
@@ -93,7 +93,7 @@ if [[ $1 != 'create' && \
   exit 1
 fi
 
-# If a command requires sudo, make sure we've are root.
+# If a command requires sudo, make sure we're root.
 if [[ ( $1 = 'create' || \
         $1 = 'backup' || \
         $1 = 'restore' || \
@@ -107,5 +107,5 @@ fi
 
 # Run all script commands in ./scripts.d
 for script in $( ls ./scripts.d/S* ) ; do
-  source $script $* $TEMPLATE $DATESTAMP
+  source $script
 done
