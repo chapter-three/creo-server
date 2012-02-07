@@ -2,19 +2,21 @@
 # Stop on any errors
 set -e
 
-FLAGS_HELP="USAGE: creo command project
+# Store the starting directory
+STARTDIR=$PWD
+
+FLAGS_HELP="Usage: creo command project [-t template]
 
 Project commands (root required):
-create -t template:        creates a new project from template
-backup:                    backup a project (aka archive)
-restore:                   restore a project from backup (aka unarchive)
-delete:                    deletes the project
-create_solr:               creates a project solr instance
-delete_solr:               deletes the project solr instance
+create:                    creates a new project from a template
+backup:                    backup a project (archive)
+restore:                   restore a project backup (unarchive)
+delete:                    delete a project
+create_solr:               creates a project Solr instance
+delete_solr:               deletes the project Solr instance
 
 Project commands (root not required):
-local_all:                 dumps a copy of the project (svn, non-svn, files, db and private sandbox db) for local development
-local_files:               dumps a copy of the project non-svn files
+local_files:               dumps a copy of the project files
 local_db:                  dumps a copy of the project db
 local_private_db:          dumps a copy of the project private sandbox db
 
@@ -26,31 +28,33 @@ delete_private_db:         deletes a private sandbox database
 "
 
 # Get the script's current working directory: http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+# Consider moving creo.conf to /etc: http://mywiki.wooledge.org/BashFAQ/028
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
-CWD="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+SCRIPTDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 # Include color echo functions (echo_color, set_message)
-source $CWD/include/colors
+source $SCRIPTDIR/include/colors
 
-set_message "Creo Project v0.1 - Linux/Apache/MySQL/PHP/Solr/Trac/Drupal/Drush project manager"
+echo "Creo Project v0.5 - Linux/Apache/MySQL/PHP/Solr/Trac/Drupal/Drush Project Manager"
 
 # Check if creo.conf exists
-if [ ! -e $CWD/creo.conf ]; then
+if [ ! -e $SCRIPTDIR/creo.conf ]; then
   set_message "Configuration cannot be found. Copy creo.conf.sample to creo.conf and adjust the values." error
   exit 1
 fi
 
 # Include creo.conf
-source $CWD/creo.conf
+source $SCRIPTDIR/creo.conf
+source $SCRIPTDIR/include/confcheck
 
 # Allow errors for shflags
 set +e
 # Include shflags to parse flags
-source $CWD/include/shflags
+source $SCRIPTDIR/include/shflags
 
 # Set shflags
-DEFINE_string template "$DEFAULT_TEMPLATE" 'template to use when creating a new project - used with the create command' t
+DEFINE_string template "$DEFAULT_TEMPLATE" 'specify a template other than the default' t
 
 # Parse the command-line
 FLAGS "$@" || exit $?
@@ -78,12 +82,9 @@ if [[ $1 != 'create' && \
       $1 != 'delete' && \
       $1 != 'create_solr' && \
       $1 != 'delete_solr' && \
-      $1 != 'external' && \
-      $1 != 'local_all' && \
       $1 != 'local_files' && \
       $1 != 'local_db' && \
       $1 != 'local_private_db' && \
-      $1 != 'export' && \
       $1 != 'sandbox' && \
       $1 != 'copy_private_db' && \
       $1 != 'create_private_db' && \
@@ -97,7 +98,6 @@ fi
 if [[ ( $1 = 'create' || \
         $1 = 'backup' || \
         $1 = 'restore' || \
-        $1 = 'external' || \
         $1 = 'delete' || \
         $1 = 'external' ) \
         && $USER != "root" ]] ; then

@@ -13,7 +13,7 @@ RESET="\E[0m"
 #Color Echo ($message)
 echo_color () {
   message=$1
-  echo -e "$message"$RESET
+  echo -e "$message"${RESET}
 
   return
 }
@@ -29,15 +29,15 @@ set_message () {
 
   case "$type" in
     status)
-      echo_color $GREEN"$message"
+      echo_color ${GREEN}"$message"
     ;;
 
     warning)
-      echo_color $YELLOW"$message"
+      echo_color ${YELLOW}"$message"
     ;;
 
     error)
-      echo_color $RED"$message"
+      echo_color ${RED}"$message"
     ;;
   esac
 

@@ -1,0 +1,37 @@
+# Checks for valid settings in the creo.conf file.
+# @todo: Complete configuration tests
+
+# TMP_DIR: Directory to store temporary files/repos
+
+# DEFAULT_TEMPLATE: Default project template, used when -t is not specified.
+
+# APACHE_DIR: The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
+
+# WWW_DIR: The directory to store the web accessible clones of projects
+
+# WWW_USER & WWW_GROUP: The user and group owning all files/directories in $WWW_DIR.
+if ! grep -q $WWW_USER /etc/passwd; then
+  set_message "WWW_USER: '$WWW_USER' does not exist" error
+  exit 1
+fi
+
+if ! grep -q $WWW_GROUP /etc/group; then
+  set_message "WWW_GROUP: '$WWW_GROUP' does not exist" error
+  exit 1
+fi
+
+# TRAC_DIR: Directory containing Trac installations
+
+# TRAC_TEMPLATE: The directory name within $TRAC_DIR to use as a template for new projects
+
+# BACKUP_DIR: Directory to store/restore backups to/from
+
+# DOMAIN: The root domain name to use for each project. Will be used in the form: project.DOMAIN.
+
+# MYSQL_USERNAME & MYSQL_PASSWORD: MySQL username and password
+
+# DRUSH_PATH: Full path to run drush
+
+# GITOLITE_REPO_ACCESS: The user@host access string for use with Gitolite
+
+# GITOLITE_ADMIN_REPO_DIR: Directory for the gitolite-admin repo

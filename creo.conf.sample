@@ -1,5 +1,12 @@
+# Creo Project Manager Configuration
+# Created by eosrei, based on C3 project script by populist, joshk, and jskulski.
+
+
 # Directory to store temporary files/repos
 TMP_DIR=/tmp
+
+# Default project template, used when -t is not specified.
+DEFAULT_TEMPLATE=drupal7
 
 # The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
 APACHE_DIR=/etc/apache2
@@ -35,5 +42,4 @@ GITOLITE_REPO_ACCESS=git@localhost
 
 # Directory for the gitolite-admin repo
 GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
-
 
