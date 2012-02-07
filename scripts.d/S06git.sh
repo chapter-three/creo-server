@@ -12,7 +12,7 @@ case "$COMMAND" in
     sed -i "s/$TEMPLATE/$PROJECT/" conf/repos/$PROJECT.conf
 
     # Add the new file to the repo
-    git add $PROJECT.conf
+    git add conf/repos/$PROJECT.conf
     git commit -m "Add $PROJECT.conf"
 
     set_message "Store the new file in the gitolite-admin repo"
@@ -31,6 +31,8 @@ case "$COMMAND" in
 
     # Change file ownership to the correct user/group
     chmod -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
+
+    cd $START_DIR
 
     #echo "Creating $WWW_DIR/$PROJECT/sites/$PROJECT.$DOMAIN..."
     #mv $TMP_DIR/$PROJECT/sites/$TEMPLATE.$DOMAIN $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN
