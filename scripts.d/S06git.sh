@@ -33,7 +33,8 @@ case "$COMMAND" in
     # Change file ownership to the correct user/group
     chown -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
 
-    cd $START_DIR
+    # Exit with same directory (Must do this since everything is called by source. Change?)
+    cd $STARTDIR
 
     #echo "Creating $WWW_DIR/$PROJECT/sites/$PROJECT.$DOMAIN..."
     #mv $TMP_DIR/$PROJECT/sites/$TEMPLATE.$DOMAIN $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN
