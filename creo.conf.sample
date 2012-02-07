@@ -40,6 +40,8 @@ DRUSH_PATH=/usr/local/drush/drush.php
 # The user@host access string for use with Gitolite
 GITOLITE_REPO_ACCESS=git@localhost
 
-# Directory for the gitolite-admin repo
-GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
+# The directory where all gitolite repos are stored
+GITOLITE_REPO_DIR=/var/gitolite/repositories
 
+# The directory of the gitolite-admin repo clone
+GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
