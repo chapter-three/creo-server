@@ -7,7 +7,8 @@ backup_db() {
     if [ "$db" = "$1" ]; then
       echo "Existing DB $1 found, backing up to $2"
       #clear caches and dump all but user cache tables:
-      drush -r /var/www/${1} cc all
+      # @todo: drush can only be run on working drupal installs. Test first
+      #drush -r /var/www/${1} cc all
       mysqldump -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $1 -r $2
     fi
   done

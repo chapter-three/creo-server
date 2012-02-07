@@ -6,7 +6,7 @@ case "$COMMAND" in
     cd $GITOLITE_ADMIN_REPO_DIR
 
     set_message "Copy gitolite $TEMPLATE conf to $PROJECT project conf"
-    cp conf/repos/$TEMPLATE.conf $conf/repos/$PROJECT.conf
+    cp conf/repos/$TEMPLATE.conf conf/repos/$PROJECT.conf
 
     # Change the repo name in the file from $TEMPLATE to $PROJECT
     sed -i "s/$TEMPLATE/$PROJECT/" conf/repos/$PROJECT.conf
