@@ -31,7 +31,7 @@ case "$COMMAND" in
     git config --local branch.master.remote origin
 
     # Change file ownership to the correct user/group
-    chmod -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
+    chown -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
 
     cd $START_DIR
 
