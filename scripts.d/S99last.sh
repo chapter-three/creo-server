@@ -2,7 +2,7 @@ case "$COMMAND" in
   create)
     echo -n "Project $PROJECT created"
     echo " "
-    ../project create_solr $PROJECT
+    #../project create_solr $PROJECT
   ;;
 
   backup)

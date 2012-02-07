@@ -2,27 +2,42 @@
 case "$COMMAND" in
   #nothing for create_solr, delete_solr, external, local_files, local_db, local_private_db, copy_private_db, create_private_db, update_private_db or delete_private_db
   create)
-    #Create gitolite repo
-    #Checkout $PROJECT
-    #Change origin to new repo
-    #Push project to new repo
-    echo "Creating GIT repository....."
+    set_message "Creating GIT repository..."
+    cd $GITOLITE_ADMIN_REPO_DIR
 
-    svnadmin create $SVN_DIR/$PROJECT --fs-type fsfs
-    svn mkdir -q -m "Creating subversion structure" file://$SVN_DIR/$PROJECT/trunk file://$SVN_DIR/$PROJECT/branches file://$SVN_DIR/$PROJECT/tags
-    echo "Creating $WWW_DIR/$PROJECT/sites/$PROJECT.$DOMAIN dir..."
-    mv $TMP_DIR/$PROJECT/sites/$TEMPLATE.$DOMAIN $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN
-    sed -i "s/$TEMPLATE/$PROJECT/" $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN/settings.php
-    sed -i "s/mysql:/mysqli:/" $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN/settings.php
-    cd $TMP_DIR/$PROJECT/sites/; ln -sf $PROJECT.$DOMAIN default
-    svn import -q -m "Initial import of $PROJECT from $TEMPLATE" $TMP_DIR/$PROJECT file://$SVN_DIR/$PROJECT/trunk
-    rm -rf  $TMP_DIR/$PROJECT
+    set_message "Copy gitolite $TEMPLATE conf to $PROJECT project conf"
+    cp conf/repos/$TEMPLATE.conf $conf/repos/$PROJECT.conf
 
-    # get the globabl svn hooks
-    rm -rf /var/svn/$PROJECT/hooks
-    ln -s /usr/local/scripts/svn_hooks /var/svn/$PROJECT/hooks
+    # Change the repo name in the file from $TEMPLATE to $PROJECT
+    sed -i "s/$TEMPLATE/$PROJECT/" conf/repos/$PROJECT.conf
 
-    svn co -q file://$SVN_DIR/$PROJECT/trunk $WWW_DIR/$PROJECT
+    # Add the new file to the repo
+    git add $PROJECT.conf
+    git commit -m "Add $PROJECT.conf"
+
+    set_message "Store the new file in the gitolite-admin repo"
+    git push
+
+    # Change to WWW_DIR
+    cd $WWW_DIR
+    set_message "Cloning $TEMPLATE template into $WWW_DIR/$PROJECT"
+    git clone $GITOLITE_REPO_ACCESS:$TEMPLATE $PROJECT
+    set_message "Changing origin to $PROJECT repo"
+    # Change the origin to be the new PROJECT repo
+    git remote rename origin $TEMPLATE
+    git remote add origin $GITOLITE_REPO_ACCESS:$PROJECT
+    git push origin master
+    git config --local branch.master.remote origin
+
+    # Change file ownership to the correct user/group
+    chmod -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
+
+    #echo "Creating $WWW_DIR/$PROJECT/sites/$PROJECT.$DOMAIN..."
+    #mv $TMP_DIR/$PROJECT/sites/$TEMPLATE.$DOMAIN $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN
+
+    #sed -i "s/$TEMPLATE/$PROJECT/" $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN/settings.php
+    #cd $TMP_DIR/$PROJECT/sites/; ln -sf $PROJECT.$DOMAIN default
+
   ;;
 
   backup)

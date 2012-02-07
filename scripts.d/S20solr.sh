@@ -20,6 +20,7 @@ case "$COMMAND" in
     rm -r /var/solr/$PROJECT
     rm /etc/tomcat6/Catalina/localhost/$PROJECT.xml
     rm -r /var/lib/tomcat6/webapps/$PROJECT
+    # @todo: Make sure files were deleted before the restart is done.
     echo "Restarting Tomcat..."
     /etc/init.d/tomcat6 restart
   ;;
