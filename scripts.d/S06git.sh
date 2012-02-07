@@ -24,6 +24,7 @@ case "$COMMAND" in
     git clone $GITOLITE_REPO_ACCESS:$TEMPLATE $PROJECT
     set_message "Changing origin to $PROJECT repo"
     # Change the origin to be the new PROJECT repo
+    cd $WWW_DIR/$PROJECT
     git remote rename origin $TEMPLATE
     git remote add origin $GITOLITE_REPO_ACCESS:$PROJECT
     git push origin master
