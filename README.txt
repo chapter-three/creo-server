@@ -25,6 +25,7 @@ INSTALLATION
 2. Download and install Drush in a globally accessible location. (Often in /usr or /usr/local)
 3. Download and setup Solr
 4. Download and setup Trac
-5. Copy creo.conf.sample to creo.conf and adjust the values to match your server
-6. Go!
+5. Create Apache, Solr, and Trac template filess
+6. Copy creo.conf.sample to creo.conf and adjust the values to match your server
+7. Go!
 

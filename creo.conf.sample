@@ -44,5 +44,14 @@ WWW_DIR=/var/www
 WWW_USER=root
 WWW_GROUP=www-data
 
+# The directory name in the Solr directories to use as a template for new projects
+SOLR_TEMPLATE=template_solr
 
+# The data directory for Solr instancesl; will contain bin, conf, and data directories.
+SOLR_DATA_DIR=/var/solr
 
+# The web app directory for Tomcat; contains solr.war, and instance admin files.
+TOMCAT_WEBAPP_DIR=/var/lib/tomcat6/webapps
+
+# The Tomcat HTTP root directory; contains solr.xml, and instance xml files.
+TOMCAT_LOCALHOST_DIR=/etc/tomcat6/Catalina/localhost

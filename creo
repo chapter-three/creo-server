@@ -1,4 +1,7 @@
 #!/bin/bash
+# Creo Project Manager
+# Created by eosrei, based on C3 project script by populist, joshk, and jskulski.
+
 # Stop on any errors
 set -e
 
@@ -39,7 +42,7 @@ SCRIPTDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 # Include color echo functions (echo_color, set_message)
 source $SCRIPTDIR/include/colors
 
-echo "Creo Project v0.5 - Linux/Apache/MySQL/PHP/Solr/Trac/Drupal/Drush Project Manager"
+echo "Creo Project Manager v0.5 for Linux/Apache/MySQL/PHP/Solr/Trac/Drupal/Drush projects"
 
 # Check if creo.conf exists
 if [ ! -e $SCRIPTDIR/creo.conf ]; then
