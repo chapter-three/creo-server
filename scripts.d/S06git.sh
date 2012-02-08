@@ -13,7 +13,7 @@ case "$COMMAND" in
 
     # Add the new file to the repo
     git add conf/repos/$PROJECT.conf
-    git commit -m "Add $PROJECT.conf"
+    git commit -m "$SCRIPTNAME - Add $PROJECT.conf"
 
     # Store the new file in the gitolite-admin repo
     git push
@@ -62,9 +62,9 @@ case "$COMMAND" in
     cd $GITOLITE_ADMIN_REPO_DIR
 
     git rm conf/repos/$PROJECT.conf
-    git commit -m "Delete $PROJECT.conf"
+    git commit -m "$SCRIPTNAME - Delete $PROJECT.conf"
 
-    rm -rfv $GITOLITE_REPO_DIR/$PROJECT
+    rm -rfv $GITOLITE_REPO_DIR/$PROJECT.git
 
     # Store the change in the gitolite-admin repo
     git push

@@ -1,5 +1,6 @@
 # Checks for valid settings in the creo.conf file.
 # @todo: Complete configuration tests
+# @todo: Check location of Linux/Apache/MySQL/PHP/Solr/Trac/Drupal/Drush
 
 # TMP_DIR: Directory to store temporary files/repos
 
