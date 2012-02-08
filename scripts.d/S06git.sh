@@ -2,7 +2,7 @@
 case "$COMMAND" in
   #nothing for create_solr, delete_solr, external, local_files, local_db, local_private_db, copy_private_db, create_private_db, update_private_db or delete_private_db
   create)
-    set_message "Creating GIT repository..."
+    set_message "Creating GIT repository"
     cd $GITOLITE_ADMIN_REPO_DIR
 
     set_message "Copy gitolite $TEMPLATE conf to $PROJECT project conf"
@@ -36,7 +36,7 @@ case "$COMMAND" in
     # Exit with same directory (Must do this since everything is called by source. Change?)
     cd $STARTDIR
 
-    #echo "Creating $WWW_DIR/$PROJECT/sites/$PROJECT.$DOMAIN..."
+    #echo "Creating $WWW_DIR/$PROJECT/sites/$PROJECT.$DOMAIN"
     #mv $TMP_DIR/$PROJECT/sites/$TEMPLATE.$DOMAIN $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN
 
     #sed -i "s/$TEMPLATE/$PROJECT/" $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN/settings.php
@@ -44,27 +44,26 @@ case "$COMMAND" in
   ;;
 
   backup)
-    set_message "Rolling up GIT..."
+    set_message "Backing up GIT"
     mkdir -p $BACKUP_DIR/$PROJECT
-    svnadmin dump -q $SVN_DIR/$PROJECT | gzip - > $BACKUP_DIR/$PROJECT/$PROJECT.svn.gz
+    tar cf $BACKUP_DIR/$PROJECT/$PROJECT.svn.tar.gz $GITOLITE_REPO_DIR/$PROJECT.git
   ;;
 
   restore)
-    set_message "Rolling down GIT..."
-    mkdir -p $SVN_DIR/$PROJECT
-    svnadmin create $SVN_DIR/$PROJECT --fs-type fsfs
-    gunzip -c $BACKUP_DIR/$PROJECT/$PROJECT.svn.gz | svnadmin load -q $SVN_DIR/$PROJECT
-    set_svn_permissions $PROJECT
+    set_message "Restoing GIT"
+    mkdir -p $GITOLITE_REPO_DIR/$PROJECT.git
+    tar xf $BACKUP_DIR/$PROJECT/$PROJECT.svn.tar.gz -C $GITOLITE_REPO_DIR/$PROJECT.git
+    #@todo Add back to gitolite, if needed.
   ;;
 
   delete)
-    set_message "Removing GIT repository..."
+    set_message "Removing GIT repository"
     cd $GITOLITE_ADMIN_REPO_DIR
 
     git rm conf/repos/$PROJECT.conf
     git commit -m "$SCRIPTNAME - Delete $PROJECT.conf"
 
-    rm -rfv $GITOLITE_REPO_DIR/$PROJECT.git
+    rm -rf $GITOLITE_REPO_DIR/$PROJECT.git
 
     # Store the change in the gitolite-admin repo
     git push
@@ -72,14 +71,14 @@ case "$COMMAND" in
   ;;
 
 #  local_all)
-#    echo "Getting an export of the trunk for local dev..."
+#    echo "Getting an export of the trunk for local dev"
 #    mkdir -p $HOME/${PROJECT}-${COMMAND}
 #    svn co https://$PROJECT.$DOMAIN/svn/trunk/ $HOME/${PROJECT}-${COMMAND}/$PROJECT
 #  ;;
 
 
   sandbox)
-    set_message "Creating a $PROJECT sandbox for $USER..."
+    set_message "Creating a $PROJECT sandbox for $USER"
 
     if [ -d $HOME/public_html/$PROJECT ] ; then
       set_message "Sandbox already exists at $HOME/public_html/$PROJECT" error

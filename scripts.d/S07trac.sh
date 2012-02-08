@@ -2,8 +2,8 @@
 case "$COMMAND" in
   #nothing for create_solr, delete_solr, external, local_all, local_files, local_db, local_private_db, export, sandbox, copy_private_db, create_private_db, update_private_db or delete_private_db
   create)
-    set_message "Creating Trac..."
-    cp -ra /var/trac/$TEMPLATE /var/trac/$PROJECT
+    set_message "Creating Trac"
+    cp -ra /var/trac/$TRAC_TEMPLATE /var/trac/$PROJECT
     sed -i '/file =/ d' $TRAC_DIR/$PROJECT/conf/trac.ini
     sed -i "/origin.dir/ c\origin.dir = $GITOLITE_REPO_DIR/$PROJECT.git" $TRAC_DIR/$PROJECT/conf/trac.ini
     sed -i "/repository_dir/ c\repository_dir = $GITOLITE_REPO_DIR/$PROJECT.git" $TRAC_DIR/$PROJECT/conf/trac.ini
@@ -19,19 +19,19 @@ case "$COMMAND" in
   ;;
 
   backup)
-    set_message "Rolling up Trac..."
+    set_message "Rolling up Trac"
     mkdir -p $BACKUP_DIR/$PROJECT
     ( cd $TRAC_DIR ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.trac.tar.gz ./$PROJECT ) && exit 0
   ;;
 
   restore)
-    set_message "Rolling down Trac..."
+    set_message "Rolling down Trac"
     mkdir -p $TRAC_DIR/$PROJECT
     ( cd $TRAC_DIR ; tar xzf $BACKUP_DIR/$PROJECT/$PROJECT.trac.tar.gz ) && exit 0
   ;;
 
   delete)
-    set_message "Removing Trac..."
+    set_message "Removing Trac"
     rm -rf $TRAC_DIR/$PROJECT
   ;;
 esac

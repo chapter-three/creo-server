@@ -1,15 +1,10 @@
+#@todo: Run apache2/httpd graceful
+#@todo: Add HTTP Authorization
 
 config_settings() {
   #$1 is the connection type (mysql or mysqli), $2 is the new DB username, $3 is the new DB password, $4 is the new DB name and $5 is the path to settings.php
-  set_message "Modifying settings.php for sandboxed project $PROJECT..."
+  set_message "Modifying settings.php for sandboxed project $PROJECT"
   sed -i "s|^\\\$db_url = .*|\$db_url = '$1:\\/\\/$2:$3@localhost\\/$4';|" $5
-}
-
-symlink() {
-  #$1 is the project name:
-  if [ ! -L $APACHE_DIR/sites-enabled/$1 ]; then
-    ln -s $APACHE_DIR/sites-available/$1 $APACHE_DIR/sites-enabled/$1
-  fi
 }
 
 copy_if_missing() {
@@ -22,7 +17,7 @@ copy_if_missing() {
 case "$COMMAND" in
   #nothing for create_solr, delete_sol local_db, local_private_db and update_private_db
   create)
-    set_message "Setting up $PROJECT in Apache..."
+    set_message "Setting up $PROJECT in Apache"
 
     if [ -d $WWW_DIR/$TEMPLATE/sites/all/files && ! -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
       cp -r $WWW_DIR/$TEMPLATE/sites/all/files $WWW_DIR/$PROJECT/sites/all/files
@@ -35,12 +30,12 @@ case "$COMMAND" in
 
     # set up apache
     sed "s/$TEMPLATE/$PROJECT/" $APACHE_DIR/sites-available/$TEMPLATE > $APACHE_DIR/sites-available/$PROJECT
-    symlink $PROJECT
-    /etc/init.d/apache2 reload
+    a2ensite $PROJECT
+    $APACHE_SERVICE_PATH reload
   ;;
 
   backup)
-    set_message "Rolling up WWW....."
+    set_message "Rolling up WWW"
     mkdir -p $BACKUP_DIR/$PROJECT
     ( cd $WWW_DIR ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.www.tar.gz ./$PROJECT )
     ( cd $APACHE_DIR/sites-available ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.apache-sa.tar.gz $PROJECT )
@@ -50,7 +45,7 @@ case "$COMMAND" in
   ;;
 
   restore)
-    set_message "Rolling down WWW....."
+    set_message "Rolling down WWW"
 
     # get files in place
     mkdir -p $WWW_DIR/$PROJECT
@@ -67,21 +62,20 @@ case "$COMMAND" in
       ( cd $APACHE_DIR/htpasswds ; tar xzf $BACKUP_DIR/$PROJECT/$PROJECT.htpasswds.tar.gz )
     fi
 
-    symlink $PROJECT
-    /etc/init.d/apache2 reload
+    a2ensite $PROJECT
+    $APACHE_SERVICE_PATH reload
   ;;
 
   delete)
-    set_message "Removing WWW...."
+    set_message "Removing WWW"
     rm -rf $WWW_DIR/$PROJECT
     rm $APACHE_DIR/sites-enabled/$PROJECT
     rm $APACHE_DIR/sites-available/$PROJECT
-    rm $APACHE_DIR/htpasswds/$PROJECT.auth
-    /etc/init.d/apache2 reload
+    $APACHE_SERVICE_PATH reload
   ;;
 
   local_all | local_files | export)
-    set_message "Getting file directories..."
+    set_message "Getting file directories"
     if [ -d $WWW_DIR/$PROJECT/files ] ; then
       cp -r $WWW_DIR/$PROJECT/files $HOME/${PROJECT}-${COMMAND}/$PROJECT
     fi
