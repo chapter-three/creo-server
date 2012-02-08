@@ -1,4 +1,5 @@
 # @todo: Make sure files were deleted before the restart.
+# @todo: Determine Tomcat's port
 
 case "$COMMAND" in
   create_solr)
@@ -10,9 +11,10 @@ case "$COMMAND" in
     set_message "Restarting Tomcat"
     $TOMCAT_SERVICE_PATH restart
     #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT enable apachesolr apachesolr_search search
-    #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT vset --yes apachesolr_port 8180
+    #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT vset --yes apachesolr_port $TOMCAT_PORT
     #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT vset --yes apachesolr_path /inceptum
-    set_message "Please go to http://$PROJECT.$DOMAIN:8180/$PROJECT/admin/ and verify the new context is working."
+
+    set_message "Go to: http://$PROJECT.$DOMAIN:$TOMCAT_PORT/$PROJECT/admin/ to verify the new context." warning
   ;;
 
   delete_solr)

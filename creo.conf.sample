@@ -32,7 +32,7 @@ GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
 TRAC_DIR=/var/trac
 
 # The directory name within $TRAC_DIR to use as a template for new projects
-TRAC_TEMPLATE=templatetrac
+TRAC_TEMPLATE=template_trac
 
 # The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
 APACHE_DIR=/etc/apache2
@@ -47,7 +47,7 @@ WWW_DIR=/var/www
 WWW_USER=root
 WWW_GROUP=www-data
 
-# The directory name of the template for new projects
+# The directory name of the template for new projects (Must exist in all three directories)
 SOLR_TEMPLATE=template_solr
 
 # The data directory for Solr instancesl; will contain bin, conf, and data directories
@@ -61,3 +61,6 @@ TOMCAT_LOCALHOST_DIR=/etc/tomcat6/Catalina/localhost
 
 # Path to the tomcat6 script, must accept restart command
 TOMCAT_SERVICE_PATH=/etc/init.d/tomcat6
+
+# Port Tomcat is running on
+TOMCAT_PORT=8983
