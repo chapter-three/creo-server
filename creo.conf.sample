@@ -1,12 +1,38 @@
 # Creo Project Manager Configuration
-# Created by eosrei, based on C3 project script by populist, joshk, and jskulski.
-
 
 # Directory to store temporary files/repos
 TMP_DIR=/tmp
 
 # Default project template, used when -t is not specified.
 DEFAULT_TEMPLATE=drupal7
+
+# The root domain name to use for each project. Will be used in the form: project.DOMAIN.
+DOMAIN=
+
+# Full path to drush
+DRUSH_PATH=/usr/local/drush/drush
+
+# Directory to store/restore backups to/from
+BACKUP_DIR=/var/backups/codebase
+
+# MySQL username and password
+MYSQL_USERNAME=
+MYSQL_PASSWORD=
+
+# The user@host access string for use with Gitolite
+GITOLITE_REPO_ACCESS=git@localhost
+
+# The directory where all gitolite repos are stored
+GITOLITE_REPO_DIR=/var/gitolite/repositories
+
+# The gitolite-admin repo clone directory for root
+GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
+
+# Directory containing Trac installations
+TRAC_DIR=/var/trac
+
+# The directory name within $TRAC_DIR to use as a template for new projects
+TRAC_TEMPLATE=templatetrac
 
 # The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
 APACHE_DIR=/etc/apache2
@@ -18,30 +44,5 @@ WWW_DIR=/var/www
 WWW_USER=root
 WWW_GROUP=www-data
 
-# Directory containing Trac installations
-TRAC_DIR=/var/trac
 
-# The directory name within $TRAC_DIR to use as a template for new projects
-TRAC_TEMPLATE=templatetrac
 
-# Directory to store/restore backups to/from
-BACKUP_DIR=/var/backups/codebase
-
-# The root domain name to use for each project. Will be used in the form: project.DOMAIN.
-DOMAIN=
-
-# MySQL username and password
-MYSQL_USERNAME=
-MYSQL_PASSWORD=
-
-# Full path to run drush
-DRUSH_PATH=/usr/local/drush/drush.php
-
-# The user@host access string for use with Gitolite
-GITOLITE_REPO_ACCESS=git@localhost
-
-# The directory where all gitolite repos are stored
-GITOLITE_REPO_DIR=/var/gitolite/repositories
-
-# The directory of the gitolite-admin repo clone
-GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
