@@ -1,7 +1,7 @@
 
 config_settings() {
   #$1 is the connection type (mysql or mysqli), $2 is the new DB username, $3 is the new DB password, $4 is the new DB name and $5 is the path to settings.php
-  echo "Modifying settings.php for sandboxed project $PROJECT....."
+  set_message "Modifying settings.php for sandboxed project $PROJECT..."
   sed -i "s|^\\\$db_url = .*|\$db_url = '$1:\\/\\/$2:$3@localhost\\/$4';|" $5
 }
 
@@ -22,7 +22,7 @@ copy_if_missing() {
 case "$COMMAND" in
   #nothing for create_solr, delete_sol local_db, local_private_db and update_private_db
   create)
-    echo "Exporting a copy of $PROJECT......"
+    set_message "Setting up $PROJECT in Apache..."
 
     if [ -d $WWW_DIR/$TEMPLATE/sites/all/files && ! -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
       cp -r $WWW_DIR/$TEMPLATE/sites/all/files $WWW_DIR/$PROJECT/sites/all/files
@@ -40,7 +40,7 @@ case "$COMMAND" in
   ;;
 
   backup)
-    echo "Rolling up WWW....."
+    set_message "Rolling up WWW....."
     mkdir -p $BACKUP_DIR/$PROJECT
     ( cd $WWW_DIR ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.www.tar.gz ./$PROJECT )
     ( cd $APACHE_DIR/sites-available ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.apache-sa.tar.gz $PROJECT )
@@ -50,7 +50,7 @@ case "$COMMAND" in
   ;;
 
   restore)
-    echo "Rolling down WWW....."
+    set_message "Rolling down WWW....."
 
     # get files in place
     mkdir -p $WWW_DIR/$PROJECT
@@ -72,7 +72,7 @@ case "$COMMAND" in
   ;;
 
   delete)
-    echo "Removing WWW...."
+    set_message "Removing WWW...."
     rm -rf $WWW_DIR/$PROJECT
     rm $APACHE_DIR/sites-enabled/$PROJECT
     rm $APACHE_DIR/sites-available/$PROJECT
@@ -81,7 +81,7 @@ case "$COMMAND" in
   ;;
 
   local_all | local_files | export)
-    echo "Getting file directories..."
+    set_message "Getting file directories..."
     if [ -d $WWW_DIR/$PROJECT/files ] ; then
       cp -r $WWW_DIR/$PROJECT/files $HOME/${PROJECT}-${COMMAND}/$PROJECT
     fi

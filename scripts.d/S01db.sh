@@ -46,13 +46,13 @@ case "$COMMAND" in
   # nothing for create_solr, delete_solr, external, or local_private_files
   create)
     backup_db $PROJECT $HOME/${PROJECT}_${DATESTAMP}.sql
-    echo "Creating DB....."
+    set_message "Creating DB..."
     create_db $PROJECT
     copy_db $TEMPLATE $PROJECT
   ;;
 
   backup)
-    echo "Rolling up DB....."
+    set_message "Rolling up DB..."
     mkdir -p $BACKUP_DIR/$PROJECT
     copy_db $PROJECT scratch
     backup_db scratch $BACKUP_DIR/$PROJECT/$PROJECT.sql
@@ -62,13 +62,13 @@ case "$COMMAND" in
 
   restore)
     backup_db $PROJECT $HOME/${PROJECT}_${DATESTAMP}.sql
-    echo "Rolling down DB....."
+    set_message "Rolling down DB..."
     create_db $PROJECT
     gunzip -c $BACKUP_DIR/$PROJECT/$PROJECT.sql.gz | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $PROJECT
   ;;
 
   local_all)
-    echo "Exporting DB...."
+    set_message "Exporting DB...."
     mkdir -p $HOME/${PROJECT}-${COMMAND}
     copy_db $PROJECT scratch
     backup_db scratch $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${DATESTAMP}.sql
@@ -81,7 +81,7 @@ case "$COMMAND" in
   ;;
 
   local_db | export)
-    echo "Exporting DB...."
+    set_message "Exporting DB...."
     mkdir -p $HOME/${PROJECT}-${COMMAND}
     copy_db $PROJECT scratch
     backup_db scratch $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${DATESTAMP}.sql
@@ -89,13 +89,13 @@ case "$COMMAND" in
   ;;
 
   local_private_db)
-    echo "Exporting DB...."
+    set_message "Exporting DB...."
     mkdir -p $HOME/${PROJECT}-${COMMAND}
     backup_db ${PROJECT}_${USER} $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${USER}_${DATESTAMP}.sql
   ;;
 
   delete)
-    echo "Deleting DB....."
+    set_message "Deleting DB..."
     drop_db $PROJECT
   ;;
 
@@ -104,27 +104,27 @@ case "$COMMAND" in
 
   copy_private_db)
     backup_db ${PROJECT}_${USER} $HOME/${PROJECT}_${USER}_${DATESTAMP}.sql
-    echo "Copying to sandbox DB....."
+    set_message "Copying to sandbox DB..."
     create_db ${PROJECT}_${USER}
     copy_db $PROJECT ${PROJECT}_${USER}
   ;;
 
   create_private_db)
     backup_db ${PROJECT}_${USER} $HOME/${PROJECT}_${USER}_${DATESTAMP}.sql
-    echo "Creating sandbox DB....."
+    set_message "Creating sandbox DB..."
     create_db ${PROJECT}_${USER}
   ;;
 
   update_private_db)
     backup_db ${PROJECT}_${USER} $HOME/${PROJECT}_${USER}_${DATESTAMP}.sql
-    echo "Updating sandbox DB....."
+    set_message "Updating sandbox DB..."
     create_db ${PROJECT}_${USER}
     copy_db $PROJECT ${PROJECT}_${USER}
   ;;
 
   delete_private_db)
     backup_db ${PROJECT}_${USER} $HOME/${PROJECT}_${USER}_${DATESTAMP}.sql
-    echo "Deleting sandbox DB....."
+    set_message "Deleting sandbox DB..."
     drop_db ${PROJECT}_${USER}
   ;;
 

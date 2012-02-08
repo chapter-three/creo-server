@@ -1,70 +1,70 @@
 case "$COMMAND" in
   create)
-    echo -n "Project $PROJECT created"
-    echo " "
+    set_message "Project $PROJECT created"
+    set_message " "
     #../project create_solr $PROJECT
   ;;
 
   backup)
-    echo -n "Project $PROJECT backed up."
-    echo " "
+    set_message -n "Project $PROJECT backed up."
+    set_message " "
     ../project delete $PROJECT
   ;;
 
   restore)
-    echo -n "Project $PROJECT restored from backup."
-    echo " "
+    set_message -n "Project $PROJECT restored from backup."
+    set_message " "
     ../project create_solr $PROJECT
   ;;
 
   external)
-    echo "Project $PROJECT created from external source $SVN."
-    echo "Empty database $PROJECT created - please import data to populate"
+    set_message "Project $PROJECT created from external source $SVN."
+    set_message "Empty database $PROJECT created - please import data to populate"
   ;;
 
   delete)
-    echo -n "Project $PROJECT deleted."
-    echo " "
+    set_message -n "Project $PROJECT deleted."
+    set_message " "
     ../project delete_solr $PROJECT
   ;;
 
   create_solr)
-    echo "Sorl instance created for project $PROJECT."
+    set_message "Sorl instance created for project $PROJECT."
   ;;
 
   delete_solr)
-    echo "Solr instance delete for project $PROJECT."
+    set_message "Solr instance delete for project $PROJECT."
   ;;
 
   local_all | local_files | local_db | local_private_db | export)
-    echo "Packaging $COMMAND files..."
+    set_message "Packaging $COMMAND files..."
     cp -r ../local_scripts/update* $HOME/${PROJECT}-${COMMAND}/
     cd $HOME ; zip -r ${PROJECT}-${COMMAND}-${DATESTAMP}.zip $PROJECT-${COMMAND}
     rm -rf $HOME/${PROJECT}-${COMMAND}
-    echo "$COMMAND copy of $PROJECT saved to $HOME/${PROJECT}-${COMMAND}-${DATESTAMP}.zip"
+    set_message "$COMMAND copy of $PROJECT saved to $HOME/${PROJECT}-${COMMAND}-${DATESTAMP}.zip"
   ;;
 
   sandbox)
-    echo "Sandbox of project $PROJECT created for user $USER."
-    echo "Files are in $HOME/public_html/$PROJECT"
-    echo "Website is at http://$PROJECT.$DOMAIN/~$USER/$PROJECT"
+    set_message "Sandbox of project $PROJECT created for user $USER."
+    set_message "Files are in $HOME/public_html/$PROJECT"
+    set_message "Website is at http://$PROJECT.$DOMAIN/~$USER/$PROJECT"
   ;;
 
   copy_private_db)
-    echo "Private sandbox database ${PROJECT}_${USER} created for user $USER from project $PROJECT."
+    set_message "Private sandbox database ${PROJECT}_${USER} created for user $USER from project $PROJECT."
   ;;
 
   create_private_db)
-    echo "New (blank) private sandbox database ${PROJECT}_${USER} created for user $USER for project $PROJECT."
-    echo "The new database name is ${PROJECT}_${USER} - install.php will ask you for this."
+    set_message "New (blank) private sandbox database ${PROJECT}_${USER} created for user $USER for project $PROJECT."
+    set_message "The new database name is ${PROJECT}_${USER} - install.php will ask you for this."
   ;;
 
   update_private_db)
-    echo "Private sandbox database ${PROJECT}_${USER} updated."
+    set_message "Private sandbox database ${PROJECT}_${USER} updated."
   ;;
 
   delete_private_db)
-    echo "Private sandbox database ${PROJECT}_${USER} deleted."
+    set_message "Private sandbox database ${PROJECT}_${USER} deleted."
   ;;
 
 esac
