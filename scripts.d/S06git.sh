@@ -15,7 +15,7 @@ case "$COMMAND" in
     git add conf/repos/$PROJECT.conf
     git commit -m "Add $PROJECT.conf"
 
-    set_message "Store the new file in the gitolite-admin repo"
+    # Store the new file in the gitolite-admin repo
     git push
 
     # Change to WWW_DIR
@@ -41,17 +41,16 @@ case "$COMMAND" in
 
     #sed -i "s/$TEMPLATE/$PROJECT/" $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN/settings.php
     #cd $TMP_DIR/$PROJECT/sites/; ln -sf $PROJECT.$DOMAIN default
-
   ;;
 
   backup)
-    echo "Rolling up SVN....."
+    set_message "Rolling up GIT..."
     mkdir -p $BACKUP_DIR/$PROJECT
     svnadmin dump -q $SVN_DIR/$PROJECT | gzip - > $BACKUP_DIR/$PROJECT/$PROJECT.svn.gz
   ;;
 
   restore)
-    echo "Rolling down SVN....."
+    set_message "Rolling down GIT..."
     mkdir -p $SVN_DIR/$PROJECT
     svnadmin create $SVN_DIR/$PROJECT --fs-type fsfs
     gunzip -c $BACKUP_DIR/$PROJECT/$PROJECT.svn.gz | svnadmin load -q $SVN_DIR/$PROJECT
@@ -59,36 +58,34 @@ case "$COMMAND" in
   ;;
 
   delete)
-    echo "Removing SVN....."
-    rm -rf $SVN_DIR/$PROJECT
+    set_message "Removing GIT repository..."
+    cd $GITOLITE_ADMIN_REPO_DIR
+
+    git rm conf/repos/$PROJECT.conf
+    git commit -m "Delete $PROJECT.conf"
+
+    rm -rfv $GITOLITE_REPO_DIR/$PROJECT
+
+    # Store the change in the gitolite-admin repo
+    git push
+    cd $STARTDIR
   ;;
 
-  external)
-    echo "Checking out a copy from $EXTERNAL..."
-    svn checkout $SVN $WWW_DIR/$PROJECT
-  ;;
+#  local_all)
+#    echo "Getting an export of the trunk for local dev..."
+#    mkdir -p $HOME/${PROJECT}-${COMMAND}
+#    svn co https://$PROJECT.$DOMAIN/svn/trunk/ $HOME/${PROJECT}-${COMMAND}/$PROJECT
+#  ;;
 
-  local_all)
-    echo "Getting an export of the trunk for local dev..."
-    mkdir -p $HOME/${PROJECT}-${COMMAND}
-    svn co https://$PROJECT.$DOMAIN/svn/trunk/ $HOME/${PROJECT}-${COMMAND}/$PROJECT
-  ;;
-
-  export)
-    echo "Getting an export of the trunk..."
-    mkdir -p $HOME/${PROJECT}-${COMMAND}
-    REPOSITORY=`svn info $WWW_DIR/$PROJECT | grep 'URL' | sed 's/URL: //'`
-    svn export $REPOSITORY $HOME/${PROJECT}-${COMMAND}/www
-  ;;
 
   sandbox)
-    echo "Creating a $PROJECT sandbox for $USER...."
+    set_message "Creating a $PROJECT sandbox for $USER..."
 
     if [ -d $HOME/public_html/$PROJECT ] ; then
-      echo "Sandbox already exists at $HOME/public_html/$PROJECT"
+      set_message "Sandbox already exists at $HOME/public_html/$PROJECT" error
       exit 1
     fi
 
-    svn co https://$PROJECT.$DOMAIN/svn/trunk/ $HOME/public_html/$PROJECT
+    git clone $GITOLITE_REPO_ACCESS:$PROJECT $HOME/public_html/$PROJECT
   ;;
 esac
