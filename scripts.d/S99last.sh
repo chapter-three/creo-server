@@ -1,17 +1,17 @@
 case "$COMMAND" in
   create)
     set_message "Project $PROJECT created"
-    ../$0 create_solr $PROJECT
+    $0 create_solr $PROJECT
   ;;
 
   backup)
     set_message "Project $PROJECT backed up."
-    ../$0 delete $PROJECT
+    $0 delete $PROJECT
   ;;
 
   restore)
     set_message 1"Project $PROJECT restored from backup."
-    ../$0 create_solr $PROJECT
+    $0 create_solr $PROJECT
   ;;
 
   external)
@@ -21,7 +21,7 @@ case "$COMMAND" in
 
   delete)
     set_message "Project $PROJECT deleted."
-    ../$0 delete_solr $PROJECT
+    $0 delete_solr $PROJECT
   ;;
 
   create_solr)
