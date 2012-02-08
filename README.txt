@@ -23,9 +23,44 @@ INSTALLATION
 ------------
 1. Install Apache, MySQL, PHP and Tomcat using the package manager, apt-get or aptitude.
 2. Download and install Drush in a globally accessible location. (Often in /usr or /usr/local)
-3. Download and setup Solr
+3. Download and setup Solr for multi-instance (not multi-core.) Debian/Ubuntu instructions:
+  A. Access http://www.apache.org/dyn/closer.cgi and find a mirror.
+  B. wget http://$MIRROR/apache/lucene/solr/1.4.1/apache-solr-1.4.1.tgz
+  C. tar zxf apache-solr-1.4.1.tgz
+  D. /etc/init.d/tomcat6 stop
+  E. cp apache-solr-1.4.1/dist/apache-solr-1.4.1.war /var/lib/tomcat6/webapps/solr.war
+  F. /etc/init.d/tomcat6 start (This creates the /var/lib/tomcat6/webapps/solr directory)
+  G. /etc/init.d/tomcat6 stop
+  H. cp -aR /var/lib/tomcat6/webapps/solr /var/lib/tomcat6/webapps/template_solr
+  I. mkdir -p /var/solr/template_solr
+  J. cp -aR apache-solr-1.4.1/example/solr/* /var/solr/template_solr
+  K. pico /etc/tomcat6/Catalina/localhost/template_solr.xml (use vim/vi if you want!)
+  L. Paste in the following and save (Save CTRL-X then enter):
+<Context docBase="/var/lib/tomcat6/webapps/solr.war" debug="0" crossContext="true" >
+  <Environment name="solr/home" type="java.lang.String" value="/var/solr/template_solr" override="true" />
+</Context>
+  M. Change the Tomcat server port from the default 8080 to 8983(or any other port of your choice)
+     pico /etc/tomcat6/server.xml and change:
+    <Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               URIEncoding="UTF-8"
+               redirectPort="8443" />
+     To:
+    <Connector port="8983" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               URIEncoding="UTF-8"
+               redirectPort="8443" />
+  N. Download the Apachesolr (or Search API Solr search) from Drupal.org:
+     wget http://ftp.drupal.org/files/projects/apachesolr-7.x-1.x-dev.tar.gz
+  O. tar zxf apachesolr-7.x-1.x-dev.tar.gz
+  P. Replace the Solr XML config files:
+     cp apachesolr/solr-conf/protwords.txt /var/solr/template_solr/conf/protwords.txt
+     cp apachesolr/solr-conf/schema.xml /var/solr/template_solr/conf/schema.xml
+     cp apachesolr/solr-conf/solrconfig.xml /var/solr/template_solr/conf/solrconfig.xml
+  Q. /etc/init.d/tomcat6 start
 4. Download and setup Trac
-5. Create Apache, Solr, and Trac template filess
+  A. Todo Instructions
+5. Create Apache, Solr, and Trac template files
 6. Copy creo.conf.sample to creo.conf and adjust the values to match your server
 7. Go!
 
