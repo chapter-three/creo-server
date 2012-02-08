@@ -29,3 +29,6 @@ INSTALLATION
 6. Copy creo.conf.sample to creo.conf and adjust the values to match your server
 7. Go!
 
+TODO
+----
+1. Use 'dialog' to create interactive mode

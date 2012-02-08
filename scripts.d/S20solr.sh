@@ -1,27 +1,26 @@
 
 case "$COMMAND" in
-  #nothing for create, backup, restore, delete, external, local_all, local_files, local_db, local_private_db, export, sandbox, copy_priivate_db, create_private_db, update_private_db and delete_private_db
   create_solr)
-    echo "Creating solr instance..."
-    cp -ar /var/solr/$TEMPLATE /var/solr/$PROJECT
-    cp -a /etc/tomcat6/Catalina/localhost/${TEMPLATE}.xml /etc/tomcat6/Catalina/localhost/$PROJECT.xml
-    sed -i "s/$TEMPLATE/$PROJECT/" /etc/tomcat6/Catalina/localhost/$PROJECT.xml
-    cp -ar /var/lib/tomcat6/webapps/$TEMPLATE /var/lib/tomcat6/webapps/$PROJECT
-    echo "Restarting Tomcat..."
-    /etc/init.d/tomcat6 restart
+    set_message "Creating solr instance..."
+    cp -ar $SOLR_DATA_DIR/$TEMPLATE $SOLR_DATA_DIR/$PROJECT
+    cp -a TOMCAT_LOCALHOST_DIR/${TEMPLATE}.xml TOMCAT_LOCALHOST_DIR/$PROJECT.xml
+    sed -i "s/$TEMPLATE/$PROJECT/" TOMCAT_LOCALHOST_DIR/$PROJECT.xml
+    cp -ar $TOMCAT_WEBAPP_DIR/$TEMPLATE $TOMCAT_WEBAPP_DIR/$PROJECT
+    set_message "Restarting Tomcat..."
+    $TOMCAT_SERVICE_PATH restart
     #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT enable apachesolr apachesolr_search search
     #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT vset --yes apachesolr_port 8180
     #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT vset --yes apachesolr_path /inceptum
-    echo "Please go to http://$PROJECT.$DOMAIN:8180/$PROJECT/admin/ and verify the new context is working."
+    set_message "Please go to http://$PROJECT.$DOMAIN:8180/$PROJECT/admin/ and verify the new context is working."
   ;;
 
   delete_solr)
-    echo "Removing solr instance..."
-    rm -r /var/solr/$PROJECT
-    rm /etc/tomcat6/Catalina/localhost/$PROJECT.xml
-    rm -r /var/lib/tomcat6/webapps/$PROJECT
+    set_message "Removing solr instance..."
+    rm -r $SOLR_DATA_DIR/$PROJECT
+    rm $TOMCAT_LOCALHOST_DIR/$PROJECT.xml
+    rm -r TOMCAT_WEBAPP_DIR/$PROJECT
     # @todo: Make sure files were deleted before the restart is done.
-    echo "Restarting Tomcat..."
-    /etc/init.d/tomcat6 restart
+    set_message "Restarting Tomcat..."
+    $TOMCAT_SERVICE_PATH restart
   ;;
 esac
