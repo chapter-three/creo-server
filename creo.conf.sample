@@ -37,24 +37,27 @@ TRAC_TEMPLATE=templatetrac
 # The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
 APACHE_DIR=/etc/apache2
 
+# Path to the the apache2/httpd script, must accept reload, and configtest
+APACHE_SERVICE_PATH=/etc/init.d/apache2
+
 # The directory to store the web accessible clones of projects
 WWW_DIR=/var/www
 
-# The user and group which will own all files/directories in $WWW_DIR.
+# The user and group which will own all files/directories in $WWW_DIR
 WWW_USER=root
 WWW_GROUP=www-data
 
 # The directory name of the template for new projects
 SOLR_TEMPLATE=template_solr
 
-# The data directory for Solr instancesl; will contain bin, conf, and data directories.
+# The data directory for Solr instancesl; will contain bin, conf, and data directories
 SOLR_DATA_DIR=/var/solr
 
-# The web app directory for Tomcat; contains solr.war, and instance admin files.
+# The web app directory for Tomcat; contains solr.war, and instance admin files
 TOMCAT_WEBAPP_DIR=/var/lib/tomcat6/webapps
 
-# The Tomcat HTTP root directory; contains solr.xml, and instance xml files.
+# The Tomcat HTTP root directory; contains solr.xml, and instance xml files
 TOMCAT_LOCALHOST_DIR=/etc/tomcat6/Catalina/localhost
 
-# Path to the tomcat6 script, should accept start, stop, and restart.
+# Path to the tomcat6 script, must accept restart command
 TOMCAT_SERVICE_PATH=/etc/init.d/tomcat6
