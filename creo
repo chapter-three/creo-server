@@ -6,7 +6,7 @@ set -e
 STARTDIR=$PWD
 
 # Make a script name for use in logs
-$SCRIPTNAME='creo'
+SCRIPTNAME='creo'
 
 FLAGS_HELP="Usage: creo command project [-t template]
 
