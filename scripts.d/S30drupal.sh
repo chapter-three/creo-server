@@ -21,8 +21,8 @@ case "$COMMAND" in
       ln -s $WWW_DIR/$PROJECT/files $HOME/public_html/$PROJECT/files
     fi
 
-    if [ -d $WWW_DIR/$PROJECT/files ] ; then
-      ln -s $WWW_DIR/$PROJECT/files $HOME/public_html/$PROJECT/files
+    if [ -d $WWW_DIR/$PROJECT/default/files ] ; then
+      ln -s $WWW_DIR/$PROJECT/default/files $HOME/public_html/$PROJECT/default/files
     fi
 
     (
