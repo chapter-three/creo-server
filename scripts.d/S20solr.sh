@@ -14,7 +14,7 @@ case "$COMMAND" in
     #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT vset --yes apachesolr_port $TOMCAT_PORT
     #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT vset --yes apachesolr_path /inceptum
 
-    set_message "Go to: http://$PROJECT.$DOMAIN:$TOMCAT_PORT/$PROJECT/admin/ to verify the new context." warning
+    set_message "Go to: http://$PROJECT.$DOMAIN:$TOMCAT_PORT/$PROJECT/admin/ to verify the new instance." warning
   ;;
 
   delete_solr)

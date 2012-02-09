@@ -20,6 +20,8 @@ case "$COMMAND" in
       set_message "Git $PROJECT repo already exists." error
       exit 1
     fi
+
+    #@todo: during create, if settings.php does not exist, exit and undo changes.
   ;;
 
   delete)

@@ -24,7 +24,7 @@ case "$COMMAND" in
       mkdir -p $WWW_DIR/$PROJECT/sites/all/files
     fi
 
-    chown -R root:www-data $WWW_DIR/$PROJECT
+    chown -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
     chmod -R g+w $WWW_DIR/$PROJECT
 
     # set up apache
@@ -49,11 +49,8 @@ case "$COMMAND" in
     # get files in place
     mkdir -p $WWW_DIR/$PROJECT
     ( cd $WWW_DIR ; tar xzf $BACKUP_DIR/$PROJECT/$PROJECT.www.tar.gz )
-    chown -R root:www-data $WWW_DIR/$PROJECT
+    chown -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
     chmod -R g+w $WWW_DIR/$PROJECT
-
-    # htaccess
-    copy_if_missing $WWW_DIR/$PROJECT/.htaccess.tmpl $WWW_DIR/$PROJECT/.htaccess
 
     # set up apache
     ( cd $APACHE_DIR/sites-available ; tar xzf $BACKUP_DIR/$PROJECT/$PROJECT.apache-sa.tar.gz )

@@ -1,11 +1,11 @@
+#@todo: during create, make DB settings changes more robust
 
 case "$COMMAND" in
-  #nothing for create_solr, delete_solr, external, local_files, local_db, local_private_db, copy_private_db, create_private_db, update_private_db or delete_private_db
   create)
     set_message "Creating GIT repository"
     (
-      cd $GITOLITE_ADMIN_REPO_DIR
       set_message "Copy gitolite $TEMPLATE conf to $PROJECT project conf"
+      cd $GITOLITE_ADMIN_REPO_DIR
       cp conf/repos/$TEMPLATE.conf conf/repos/$PROJECT.conf
 
       # Change the repo name in the file from $TEMPLATE to $PROJECT
@@ -21,29 +21,30 @@ case "$COMMAND" in
       #ssh-keyscan localhost -t rsa >> ~/.ssh/known_hosts
     )
     (
-      # Change to WWW_DIR
-      cd $WWW_DIR
       set_message "Cloning $TEMPLATE template into $WWW_DIR/$PROJECT"
+      cd $WWW_DIR
       git clone $GITOLITE_REPO_ACCESS:$TEMPLATE $PROJECT
-      set_message "Changing origin to $PROJECT repo"
     )
+
     (
-      # Change the origin to be the new PROJECT repo
+      set_message "Changing origin to $PROJECT repo"
       cd $WWW_DIR/$PROJECT
+
+      # Change the origin to be the new PROJECT repo
       git remote rename origin $TEMPLATE
       git remote add origin $GITOLITE_REPO_ACCESS:$PROJECT
       git push origin master
       git config --local branch.master.remote origin
 
-      # Change file ownership to the correct user/group
-      chown -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
+      set_message "Editing $WWW_DIR/$PROJECT/sites/default/settings.php"
+      # Add sites/default/settings.php to the .git/info/exclude (like .gitignore, but only this clone)
+      echo "sites/default/settings.php" >> .git/info/exclude
+
+      sed -i "s/$TEMPLATE/$PROJECT/" sites/default/settings.php
     )
 
-    #echo "Creating $WWW_DIR/$PROJECT/sites/$PROJECT.$DOMAIN"
-    #mv $TMP_DIR/$PROJECT/sites/$TEMPLATE.$DOMAIN $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN
-
-    #sed -i "s/$TEMPLATE/$PROJECT/" $TMP_DIR/$PROJECT/sites/$PROJECT.$DOMAIN/settings.php
-    #cd $TMP_DIR/$PROJECT/sites/; ln -sf $PROJECT.$DOMAIN default
+    # Change file ownership to the correct user/group
+    chown -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
   ;;
 
   backup)
