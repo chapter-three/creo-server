@@ -40,7 +40,6 @@ case "$COMMAND" in
       git remote add origin $GITOLITE_REPO_ACCESS:$PROJECT
       git push origin master
       git config --local branch.master.remote origin
-
     )
   ;;
 
@@ -51,8 +50,7 @@ case "$COMMAND" in
 
     (
       cd $TMP_DIR/import-repo
-      # @todo: check if origin remote exists
-      #git remote rm origin
+      git remote mv origin source
       git remote add origin GITOLITE_REPO_ACCESS:$PROJECT
       # @todo: check if branch master exists
       git push origin master

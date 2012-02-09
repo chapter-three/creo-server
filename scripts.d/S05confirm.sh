@@ -4,7 +4,7 @@ case "$COMMAND" in
     echo -n "Create project $PROJECT from template $TEMPLATE"
   ;;
 
-  external)
+  import)
     echo -n "Import project $PROJECT from git repo: $IMPORT_REPO"
   ;;
 
