@@ -10,6 +10,10 @@ case "$COMMAND" in
       set_message "Project $PROJECT already exists in $WWW_DIR" error
       exit 1
     fi
+    if [ -d $GITOLITE_REPO_DIR/$PROJECT.git ] ; then
+      set_message "Git $PROJECT repo already exists." error
+      exit 1
+    fi
   ;;
 esac
 

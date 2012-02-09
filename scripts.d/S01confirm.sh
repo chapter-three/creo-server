@@ -5,73 +5,72 @@ case "$COMMAND" in
   ;;
 
   backup)
-    echo "Backup project $PROJECT"
+    echo -n "Backup project $PROJECT"
   ;;
 
   restore)
-    echo "Restore project $PROJECT from backup"
+    echo -n "Restore project $PROJECT from backup"
   ;;
 
   external)
-    echo "Create project $PROJECT from external svn"
+    echo -n "Create project $PROJECT from external svn"
   ;;
 
   delete)
-    echo "Delete project $PROJECT"
+    echo -n "Delete project $PROJECT"
     set_message "Warning: No backup is made. Be sure to backup the project first." warning
   ;;
 
   create_solr)
-    echo "Create solr instance for project $PROJECT"
+    echo -n "Create solr instance for project $PROJECT"
   ;;
 
   delete_solr)
-    echo "Delete solr instance for project $PROJECT"
+    echo -n "Delete solr instance for project $PROJECT"
   ;;
 
   local_all)
-    echo "Dump a copy of the svn files, non-svn files and database(s) of project $PROJECT"
+    echo -n "Dump a copy of the svn files, non-svn files and database(s) of project $PROJECT"
   ;;
 
   local_files)
-    echo "Dump a copy of the non-svn files of project $PROJECT"
+    echo -n "Dump a copy of the non-svn files of project $PROJECT"
   ;;
 
   local_db)
-    echo "Dump a copy of the database of project $PROJECT"
+    echo -n "Dump a copy of the database of project $PROJECT"
   ;;
 
   local_private_db)
-    echo "Dump a copy of the private sandbox database of project $PROJECT"
+    echo -n "Dump a copy of the private sandbox database of project $PROJECT"
   ;;
 
   export)
-    echo "Export project $PROJECT"
+    echo -n "Export project $PROJECT"
   ;;
 
   sandbox)
-    echo "Create sandbox of project $PROJECT for user $USER"
+    echo -n "Create sandbox of project $PROJECT for user $USER"
   ;;
 
   copy_private_db)
-    echo "Create private sandbox database ${PROJECT}_${USER} for user $USER from project $PROJECT"
+    echo -n "Create private sandbox database ${PROJECT}_${USER} for user $USER from project $PROJECT"
   ;;
 
   create_private_db)
-    echo "Create new (blank) private sandbox database ${PROJECT}_${USER} for user $USER for project $PROJECT"
+    echo -n "Create new (blank) private sandbox database ${PROJECT}_${USER} for user $USER for project $PROJECT"
   ;;
 
   update_private_db)
-    echo "Update private sandbox database ${PROJECT}_${USER} for user $USER from project $PROJECT"
+    echo -n "Update private sandbox database ${PROJECT}_${USER} for user $USER from project $PROJECT"
   ;;
 
   delete_private_db)
-    echo "Delete private sandbox database ${PROJECT}_${USER} for user $USER for project $PROJECT"
+    echo -n "Delete private sandbox database ${PROJECT}_${USER} for user $USER for project $PROJECT"
   ;;
 esac
 
 read -p " (y/n)? " ANSWER
-echo ""
 if [ ${ANSWER} != "y" ]; then
   exit 1
 fi
