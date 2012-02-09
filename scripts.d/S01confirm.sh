@@ -17,8 +17,8 @@ case "$COMMAND" in
   ;;
 
   delete)
-    echo -n "Delete project $PROJECT"
     set_message "Warning: No backup is made. Be sure to backup the project first." warning
+    echo -n "Delete project $PROJECT"
   ;;
 
   create_solr)
