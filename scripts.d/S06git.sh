@@ -81,12 +81,7 @@ case "$COMMAND" in
 
 
   sandbox)
-    set_message "Creating a $PROJECT sandbox for $USER"
-
-    if [ -d $HOME/public_html/$PROJECT ] ; then
-      set_message "Sandbox already exists at $HOME/public_html/$PROJECT" error
-      exit 1
-    fi
+    set_message "Creating $PROJECT sandbox for $USER"
 
     git clone $GITOLITE_REPO_ACCESS:$PROJECT $HOME/public_html/$PROJECT
   ;;
