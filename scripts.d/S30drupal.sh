@@ -28,7 +28,7 @@ case "$COMMAND" in
     fi
 
     # If sites/default/settings.php is not the clone
-    if [ -a $HOME/public_html/$PROJECT/sites/default/settings.php ] ; then
+    if [ ! -a $HOME/public_html/$PROJECT/sites/default/settings.php ] ; then
       # Is it in $WWW_DIR?
       if [ -a $WWW_DIR/$PROJECT/sites/default/settings.php ] ; then
         # Copy it to the clone
