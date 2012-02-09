@@ -18,7 +18,7 @@ case "$COMMAND" in
   create)
     set_message "Setting up $PROJECT in Apache"
 
-    if [ -d $WWW_DIR/$TEMPLATE/sites/all/files && ! -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
+    if [ -d $WWW_DIR/$TEMPLATE/sites/all/files ] && [ ! -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
       cp -r $WWW_DIR/$TEMPLATE/sites/all/files $WWW_DIR/$PROJECT/sites/all/files
     else
       mkdir -p $WWW_DIR/$PROJECT/sites/all/files
@@ -57,9 +57,6 @@ case "$COMMAND" in
 
     # set up apache
     ( cd $APACHE_DIR/sites-available ; tar xzf $BACKUP_DIR/$PROJECT/$PROJECT.apache-sa.tar.gz )
-    if [ -e $BACKUP_DIR/$PROJECT/$PROJECT.htpasswds.tar.gz ]; then
-      ( cd $APACHE_DIR/htpasswds ; tar xzf $BACKUP_DIR/$PROJECT/$PROJECT.htpasswds.tar.gz )
-    fi
 
     a2ensite $PROJECT
     $APACHE_SERVICE_PATH reload
