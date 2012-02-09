@@ -24,7 +24,7 @@ case "$COMMAND" in
 
   delete)
     if [ ! -d $WWW_DIR/$PROJECT ] ; then
-      set_message "Project $TEMPLATE does not exist in $WWW_DIR" error
+      set_message "Project $PROJECT does not exist in $WWW_DIR" error
       exit 1
     fi
   ;;
