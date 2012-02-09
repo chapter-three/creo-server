@@ -60,7 +60,7 @@ set +e
 source $SCRIPTDIR/include/shflags
 
 # Set shflags
-DEFINE_string template '$DEFAULT_TEMPLATE' 'specify a template other than the default' t
+DEFINE_string template "$DEFAULT_TEMPLATE" 'specify a template other than the default' t
 
 # Parse the command-line
 FLAGS "$@" || exit $?
