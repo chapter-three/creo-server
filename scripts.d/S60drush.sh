@@ -1,6 +1,6 @@
 
 case "$COMMAND" in
-  create)
+  create | import)
     #Add project to global drush aliases
   ;;
 

@@ -1,7 +1,11 @@
 
 case "$COMMAND" in
   create)
-    echo -n "Create $PROJECT from template $TEMPLATE"
+    echo -n "Create project $PROJECT from template $TEMPLATE"
+  ;;
+
+  external)
+    echo -n "Import project $PROJECT from git repo: $IMPORT_REPO"
   ;;
 
   backup)
@@ -10,10 +14,6 @@ case "$COMMAND" in
 
   restore)
     echo -n "Restore project $PROJECT from backup"
-  ;;
-
-  external)
-    echo -n "Create project $PROJECT from external svn"
   ;;
 
   delete)

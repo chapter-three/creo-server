@@ -11,6 +11,10 @@ case "$COMMAND" in
     )
   ;;
 
+  import)
+    set_message "Please edit the sites/default/settings.php to use the $PROJECT database." warning
+  ;;
+
   sandbox)
     set_message "Creating symbolic link to files"
     if [ -d $WWW_DIR/$PROJECT/sites/all/files ] ; then

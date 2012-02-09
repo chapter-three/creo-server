@@ -15,7 +15,7 @@ copy_if_missing() {
 }
 
 case "$COMMAND" in
-  create)
+  create | import)
     set_message "Setting up $PROJECT in Apache"
 
     if [ -d $WWW_DIR/$TEMPLATE/sites/all/files ] && [ ! -d $WWW_DIR/$PROJECT/sites/all/files ] ; then

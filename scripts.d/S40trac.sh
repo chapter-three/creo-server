@@ -1,7 +1,6 @@
-
 case "$COMMAND" in
-  #nothing for create_solr, delete_solr, external, local_all, local_files, local_db, local_private_db, export, sandbox, copy_private_db, create_private_db, update_private_db or delete_private_db
-  create)
+
+  create | import)
     set_message "Creating Trac"
     cp -ra /var/trac/$TRAC_TEMPLATE /var/trac/$PROJECT
     # Update Trac.ini with the new project settings

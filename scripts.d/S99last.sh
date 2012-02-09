@@ -4,6 +4,11 @@ case "$COMMAND" in
     $0 create_solr $PROJECT
   ;;
 
+  import)
+    set_message "Project $PROJECT created from git repository: $IMPORT_REPO."
+    set_message "Empty database $PROJECT created - please import data to populate."
+  ;;
+
   backup)
     set_message "Project $PROJECT backed up."
     $0 delete $PROJECT
@@ -12,11 +17,6 @@ case "$COMMAND" in
   restore)
     set_message 1"Project $PROJECT restored from backup."
     $0 create_solr $PROJECT
-  ;;
-
-  external)
-    set_message "Project $PROJECT created from external source $SVN."
-    set_message "Empty database $PROJECT created - please import data to populate"
   ;;
 
   delete)

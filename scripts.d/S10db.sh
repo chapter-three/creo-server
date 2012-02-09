@@ -1,3 +1,6 @@
+#@todo Determine a method to import databases
+
+
 backup_db() {
   #$1 is the DB name and $2 is the location to save the file
   #tests first to see if DB exists - mysqldump spits out an error if it doesn't
@@ -54,9 +57,16 @@ case "$COMMAND" in
     # Attempt to clone the repo
     (
       cd $TMP_DIR
+      rm -rf import-repo
       # This will fail the script if it fails
-      git clone $IMPORT_REPO import
+      git clone $IMPORT_REPO import-repo
     )
+
+    backup_db $PROJECT $HOME/${PROJECT}_${DATESTAMP}.sql
+    set_message "Creating DB"
+    create_db $PROJECT
+
+    set_message "Empty database $PROJECT created"
 
   ;;
 

@@ -1,25 +1,30 @@
 #@todo: during create, make DB settings changes work with Pantheon, and imported sites.
 
+create_repo() {
+  set_message "Creating GIT repository"
+  (
+    set_message "Copy gitolite $TEMPLATE conf to $PROJECT project conf"
+    cd $GITOLITE_ADMIN_REPO_DIR
+    cp conf/repos/$TEMPLATE.conf conf/repos/$PROJECT.conf
+
+    # Change the repo name in the file from $TEMPLATE to $PROJECT
+    sed -i "s/$TEMPLATE/$PROJECT/" conf/repos/$PROJECT.conf
+
+    # Add the new file to the repo
+    git add conf/repos/$PROJECT.conf
+    git commit -m "$SCRIPTNAME - Add $PROJECT.conf"
+
+    # Store the new file in the gitolite-admin repo
+    git push
+    #Automatically add new host to known_hosts:
+    #ssh-keyscan localhost -t rsa >> ~/.ssh/known_hosts
+  )
+}
+
 case "$COMMAND" in
   create)
-    set_message "Creating GIT repository"
-    (
-      set_message "Copy gitolite $TEMPLATE conf to $PROJECT project conf"
-      cd $GITOLITE_ADMIN_REPO_DIR
-      cp conf/repos/$TEMPLATE.conf conf/repos/$PROJECT.conf
+    create_repo
 
-      # Change the repo name in the file from $TEMPLATE to $PROJECT
-      sed -i "s/$TEMPLATE/$PROJECT/" conf/repos/$PROJECT.conf
-
-      # Add the new file to the repo
-      git add conf/repos/$PROJECT.conf
-      git commit -m "$SCRIPTNAME - Add $PROJECT.conf"
-
-      # Store the new file in the gitolite-admin repo
-      git push
-      #Automatically add new host to known_hosts:
-      #ssh-keyscan localhost -t rsa >> ~/.ssh/known_hosts
-    )
     (
       set_message "Cloning $TEMPLATE template into $WWW_DIR/$PROJECT"
       cd $WWW_DIR
@@ -40,7 +45,25 @@ case "$COMMAND" in
   ;;
 
   import)
-#  --no-hardlinks
+    create_repo
+
+    set_message "Importing $IMPORT_REPO into $PROJECT repository."
+
+    (
+      cd $TMP_DIR/import-repo
+      # @todo: check if origin remote exists
+      #git remote rm origin
+      git remote add origin GITOLITE_REPO_ACCESS:$PROJECT
+      # @todo: check if branch master exists
+      git push origin master
+    )
+
+    (
+      set_message "Cloning $PROJECT repository into $WWW_DIR/$PROJECT"
+      cd $WWW_DIR
+      git clone $GITOLITE_REPO_ACCESS:$PROJECT $PROJECT
+    )
+
   ;;
 
   backup)
