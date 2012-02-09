@@ -79,31 +79,6 @@ case "$COMMAND" in
     fi
   ;;
 
-  sandbox)
-    #drupal sites if not in svn
-    if [ ! -d $HOME/public_html/$PROJECT/sites/$PROJECT.$DOMAIN.~$USER ] ; then
-      cp -r $HOME/public_html/$PROJECT/sites/$PROJECT.$DOMAIN $HOME/public_html/$PROJECT/sites/$PROJECT.$DOMAIN.~$USER
-    fi
-
-    #drupal files
-    if [ -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
-      ln -s $WWW_DIR/$PROJECT/sites/all/files $HOME/public_html/$PROJECT/sites/all/files
-    fi
-
-    if [ -d $WWW_DIR/$PROJECT/files ] ; then
-      ln -s $WWW_DIR/$PROJECT/files $HOME/public_html/$PROJECT/files
-    fi
-
-    #htaccess - edit 7/21/11 by brad
-    sed "s|.*RewriteBase /.*|RewriteBase /~${USER}/$PROJECT|g" $WWW_DIR/$PROJECT/.htaccess.tmpl > $HOME/public_html/$PROJECT/.htaccess
-
-    #settings.php for project that don't have mysqli
-    config_settings mysqli $DEFAULT_DB_UN $DEFAULT_DB_PW $PROJECT $HOME/public_html/$PROJECT/sites/$PROJECT.$DOMAIN.~$USER/settings.php
-
-    #prefix cache tables for admin menu:
-    sed -i "s/^\$db_prefix.*/\$db_prefix = array('cache' => '${USER}_sandbox_','cache_admin_menu' => '${USER}_sandbox_','cache_menu' => '${USER}_sandbox_',);/" $HOME/public_html/$PROJECT/sites/$PROJECT.$DOMAIN.~$USER/settings.php
-  ;;
-
   copy_private_db)
     config_settings mysqli $DEFAULT_DB_UN $DEFAULT_DB_PW ${PROJECT}_${USER} $HOME/public_html/$PROJECT/sites/$PROJECT.$DOMAIN.~$USER/settings.php
   ;;

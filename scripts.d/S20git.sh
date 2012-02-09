@@ -36,15 +36,8 @@ case "$COMMAND" in
       git push origin master
       git config --local branch.master.remote origin
 
-      set_message "Editing $WWW_DIR/$PROJECT/sites/default/settings.php"
-      # Add sites/default/settings.php to the .git/info/exclude (like .gitignore, but only this clone)
-      echo "sites/default/settings.php" >> .git/info/exclude
-
-      sed -i "s/$TEMPLATE/$PROJECT/" sites/default/settings.php
     )
 
-    # Change file ownership to the correct user/group
-    chown -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
   ;;
 
   backup)
@@ -82,6 +75,11 @@ case "$COMMAND" in
 
   sandbox)
     set_message "Creating $PROJECT sandbox for $USER"
+
+    # If public_html doesn't exist, create it.
+    if [ ! -d $HOME/public_html ] ; then
+      mkdir $HOME/public_html
+    fi
 
     git clone $GITOLITE_REPO_ACCESS:$PROJECT $HOME/public_html/$PROJECT
   ;;
