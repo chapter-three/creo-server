@@ -42,7 +42,7 @@ SCRIPTDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 # Include color echo functions (echo_color, set_message)
 source $SCRIPTDIR/include/colors
 
-echo "Creo Project Manager v0.5 for Linux/Apache/MySQL/PHP/Solr/Trac/Drupal/Drush/Gitolite projects\n"
+echo -e "Creo Project Manager v0.5 for Linux/Apache/MySQL/PHP/Solr/Trac/Drupal/Drush/Gitolite projects\n"
 
 # Check if creo.conf exists
 if [ ! -e $SCRIPTDIR/creo.conf ]; then

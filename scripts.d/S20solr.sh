@@ -4,10 +4,10 @@
 case "$COMMAND" in
   create_solr)
     set_message "Creating Solr instance"
-    cp -ar $SOLR_DATA_DIR/$TEMPLATE $SOLR_DATA_DIR/$PROJECT
-    cp -a $TOMCAT_LOCALHOST_DIR/$TEMPLATE.xml $TOMCAT_LOCALHOST_DIR/$PROJECT.xml
-    sed -i "s/$TEMPLATE/$PROJECT/" $TOMCAT_LOCALHOST_DIR/$PROJECT.xml
-    cp -ar $TOMCAT_WEBAPP_DIR/$TEMPLATE $TOMCAT_WEBAPP_DIR/$PROJECT
+    cp -ar $SOLR_DATA_DIR/$SOLR_TEMPLATE $SOLR_DATA_DIR/$PROJECT
+    cp -a $TOMCAT_LOCALHOST_DIR/$SOLR_TEMPLATE.xml $TOMCAT_LOCALHOST_DIR/$PROJECT.xml
+    sed -i "s/$SOLR_TEMPLATE/$PROJECT/" $TOMCAT_LOCALHOST_DIR/$PROJECT.xml
+    cp -ar $TOMCAT_WEBAPP_DIR/$SOLR_TEMPLATE $TOMCAT_WEBAPP_DIR/$PROJECT
     set_message "Restarting Tomcat"
     $TOMCAT_SERVICE_PATH restart
     #drush -l http://$PROJECT.$DOMAIN -r $WWW_DIR/$PROJECT enable apachesolr apachesolr_search search
