@@ -24,7 +24,7 @@ case "$COMMAND" in
   ;;
 
   import)
-    if [ -n $IMPORT_REPO ] ; then
+    if [ -z $IMPORT_REPO ] ; then
       set_message "Git repository must be specified with -i." error
       exit 1
     fi
