@@ -16,7 +16,7 @@ case "$COMMAND" in
       exit 1
     fi
     # Don't allow projects names with the gitolite default repos
-    if [ $PROJECT = 'gitolite-admin' || $PROJECT = 'testing' ] ; then
+    if [ $PROJECT = 'gitolite-admin' ] || [ $PROJECT = 'testing' ] ; then
       set_message "Git $PROJECT repo already exists." error
       exit 1
     fi

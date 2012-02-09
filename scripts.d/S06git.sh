@@ -65,12 +65,11 @@ case "$COMMAND" in
       cd $GITOLITE_ADMIN_REPO_DIR
       git rm conf/repos/$PROJECT.conf
       git commit -m "$SCRIPTNAME - Delete $PROJECT.conf"
-
-      rm -rf $GITOLITE_REPO_DIR/$PROJECT.git
-
       # Store the change in the gitolite-admin repo
       git push
     )
+    rm -rf $GITOLITE_REPO_DIR/$PROJECT.git
+
   ;;
 
 #  local_all)
