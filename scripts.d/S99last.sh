@@ -6,7 +6,7 @@ case "$COMMAND" in
 
   import)
     set_message "Project $PROJECT created from git repository: $IMPORT_REPO."
-    set_message "Empty database $PROJECT created - please import data to populate."
+    set_message "Empty database $PROJECT created - please import data to populate." warning
   ;;
 
   backup)

@@ -46,8 +46,14 @@ case "$COMMAND" in
   import)
     create_repo
 
-    set_message "Importing $IMPORT_REPO into $PROJECT repository."
+    (
+      set_message "Cloning $PROJECT empty repository into $WWW_DIR/$PROJECT"
+      cd $WWW_DIR
+      git clone $GITOLITE_REPO_ACCESS:$PROJECT $PROJECT
+    )
 
+
+    set_message "Importing $IMPORT_REPO into $PROJECT repository."
     (
       cd $TMP_DIR/import-repo
       git remote rename origin source
