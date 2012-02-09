@@ -18,12 +18,16 @@ case "$COMMAND" in
   sandbox)
     set_message "Creating symbolic link to files"
     if [ -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
+      #@todo: rmdir, make sure directory is empty
+      rmdir $HOME/public_html/$PROJECT/sites/all/files
       ln -s $WWW_DIR/$PROJECT/sites/all/files $HOME/public_html/$PROJECT/sites/all/files
       set_message "Drupal files found at $WWW_DIR/$PROJECT/sites/all/files"
     elif [ -d $WWW_DIR/$PROJECT/files ] ; then
+      rmdir $HOME/public_html/$PROJECT/files
       ln -s $WWW_DIR/$PROJECT/files $HOME/public_html/$PROJECT/files
       set_message "Drupal files found at $WWW_DIR/$PROJECT/files"
     elif [ -d $WWW_DIR/$PROJECT/sites/default/files ] ; then
+      rmdir $HOME/public_html/$PROJECT/sites/default/files
       ln -s $WWW_DIR/$PROJECT/sites/default/files $HOME/public_html/$PROJECT/sites/default/files
       set_message "Drupal files found at $WWW_DIR/$PROJECT/sites/default/files"
     else
