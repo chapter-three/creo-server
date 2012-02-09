@@ -51,7 +51,7 @@ case "$COMMAND" in
     (
       cd $TMP_DIR/import-repo
       git remote rename origin source
-      git remote add origin GITOLITE_REPO_ACCESS:$PROJECT
+      git remote add origin $GITOLITE_REPO_ACCESS:$PROJECT
       # @todo: check if branch master exists
       git push origin master
     )
