@@ -15,8 +15,8 @@ FLAGS_HELP="Usage: creo command project [-t template]
 
 Project commands (root required):
 create:                    create a new project from a template
-backup:                    backup a project (archive)
-restore:                   restore a project backup (unarchive)
+backup:                    backup a project (archive) - NOT FUNCTIONAL
+restore:                   restore a project backup (unarchive) - NOT FUNCTIONAL
 delete:                    delete project
 create_solr:               create Solr instance for a project
 delete_solr:               delete Solr instance for a project
@@ -26,8 +26,8 @@ local_files:               dumps a copy of the project files - NOT FUNCTIONAL
 local_db:                  dumps a copy of the project db - NOT FUNCTIONAL
 local_private_db:          dumps a copy of the project private sandbox db - NOT FUNCTIONAL
 
-Sandbox commands (root not required) - Private DB commands require a user sandbox:
-sandbox:                   creates a project sandbox - NOT FUNCTIONAL
+Sandbox commands (root not required)
+sandbox:                   creates a project sandbox
 create_private_db:         creates a new (blank) private sandbox database - NOT FUNCTIONAL
 update_private_db:         updates a private sandbox database from the project database - NOT FUNCTIONAL
 delete_private_db:         deletes a private sandbox database - NOT FUNCTIONAL
