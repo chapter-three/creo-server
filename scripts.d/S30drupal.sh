@@ -27,6 +27,19 @@ case "$COMMAND" in
       set_message "A files directory could not be found." warning
     fi
 
+    # If sites/default/settings.php is not the clone
+    if [ -a $HOME/public_html/$PROJECT/sites/default/settings.php ] ; then
+      # Is it in $WWW_DIR?
+      if [ -a $WWW_DIR/$PROJECT/sites/default/settings.php ] ; then
+        # Copy it to the clone
+        cp -a $WWW_DIR/$PROJECT/sites/default/settings.php $HOME/public_html/$PROJECT/sites/default/settings.php
+      else
+        # Complain.
+        # @todo: In the future, recreate it.
+        set_message "sites/default/settings.php could not be located." warning
+      fi
+    fi
+
     (
       set_message "Editing sites/default/settings.php to use correct database"
       cd $HOME/public_html/$PROJECT
