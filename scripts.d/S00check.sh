@@ -21,7 +21,13 @@ case "$COMMAND" in
       exit 1
     fi
 
-    #@todo: during create, if settings.php does not exist, exit and undo changes.
+  ;;
+
+  import)
+    if [ -n $IMPORT_REPO ] ; then
+      set_message "Git repository must be specified with -i." error
+      exit 1
+    fi
   ;;
 
   delete)

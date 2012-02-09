@@ -50,6 +50,16 @@ case "$COMMAND" in
     copy_db $TEMPLATE $PROJECT
   ;;
 
+  import)
+    # Attempt to clone the repo
+    (
+      cd $TMP_DIR
+      # This will fail the script if it fails
+      git clone $IMPORT_REPO import
+    )
+
+  ;;
+
   backup)
     set_message "Rolling up DB"
     mkdir -p $BACKUP_DIR/$PROJECT

@@ -27,7 +27,7 @@ case "$COMMAND" in
       set_message "A files directory could not be found." warning
     fi
 
-    # If sites/default/settings.php is not the clone
+    # If sites/default/settings.php is not in the clone
     if [ ! -a $HOME/public_html/$PROJECT/sites/default/settings.php ] ; then
       # Is it in $WWW_DIR?
       if [ -a $WWW_DIR/$PROJECT/sites/default/settings.php ] ; then

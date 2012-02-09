@@ -37,7 +37,10 @@ case "$COMMAND" in
       git config --local branch.master.remote origin
 
     )
+  ;;
 
+  import)
+#  --no-hardlinks
   ;;
 
   backup)

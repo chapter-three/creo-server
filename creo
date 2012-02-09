@@ -11,10 +11,11 @@ STARTDIR=$PWD
 # Make a script name for use in logs
 SCRIPTNAME='creo'
 
-FLAGS_HELP="Usage: creo command project [-t template]
+FLAGS_HELP="Usage: creo command project [-t template] [-i repository]
 
 Project commands (root required):
 create:                    create a new project from a template
+import:                    import a project from a GIT repo
 backup:                    backup a project (archive) - NOT FUNCTIONAL
 restore:                   restore a project backup (unarchive) - NOT FUNCTIONAL
 delete:                    delete project
@@ -60,7 +61,8 @@ set +e
 source $SCRIPTDIR/include/shflags
 
 # Set shflags
-DEFINE_string template "$DEFAULT_TEMPLATE" 'specify a template other than the default' t
+DEFINE_string template "$DEFAULT_TEMPLATE" "Use specified template instead of the default" t
+DEFINE_string import '' "Import the specified repository, any git protocol/path is allowed" i
 
 # Parse the command-line
 FLAGS "$@" || exit $?
@@ -73,16 +75,18 @@ set -e
 COMMAND=$1
 PROJECT=$2
 TEMPLATE=${FLAGS_template}
+IMPORT_REPO=${FLAGS_import}
 DATESTAMP=`date +%Y%m%d%H%M%S`
 
 # Check for at least two arguments
-if ! [ $# -eq 2 ]; then
+if ! [ $# -ge 2 ]; then
   flags_help
   exit 1
 fi
 
 # Check for valid commands
 if [[ $1 != 'create' && \
+      $1 != 'import' && \
       $1 != 'backup' && \
       $1 != 'restore' && \
       $1 != 'delete' && \
@@ -102,6 +106,7 @@ fi
 
 # If a command requires sudo, make sure we're root.
 if [[ ( $1 = 'create' || \
+        $1 = 'import' || \
         $1 = 'backup' || \
         $1 = 'restore' || \
         $1 = 'delete' || \
