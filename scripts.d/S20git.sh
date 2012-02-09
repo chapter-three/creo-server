@@ -64,8 +64,8 @@ case "$COMMAND" in
 
     (
       set_message "Cloning $PROJECT repository into $WWW_DIR/$PROJECT"
-      cd $WWW_DIR
-      git clone $GITOLITE_REPO_ACCESS:$PROJECT $PROJECT
+      cd $WWW_DIR\$PROJECT
+      git pull
     )
 
   ;;
