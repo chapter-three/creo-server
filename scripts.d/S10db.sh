@@ -18,23 +18,23 @@ backup_db() {
 
 create_db() {
   #$1 is the DB name
-  echo "DROP DATABASE IF EXISTS `$1`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
-  echo "CREATE DATABASE IF NOT EXISTS `$1`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
-  echo "GRANT ALL ON `$1`.* TO '$MYSQL_USERNAME'@'localhost'; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "DROP DATABASE IF EXISTS \`$1\`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "CREATE DATABASE IF NOT EXISTS \`$1\`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "GRANT ALL ON \`$1\`.* TO '$MYSQL_USERNAME'@'localhost'; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
 }
 
 copy_db() {
   #copies DB $1 to $2
   mysqldump -u $MYSQL_USERNAME -p$MYSQL_PASSWORD $1 -r $TMP_DIR/$1.sql
-  echo "CREATE DATABASE IF NOT EXISTS `$2`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "CREATE DATABASE IF NOT EXISTS \`$2\`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
   mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD -D$2 < $TMP_DIR/$1.sql
   rm $TMP_DIR/$1.sql
 }
 
 drop_db() {
   #$1 is DB name
-  echo "DROP DATABASE IF EXISTS `$1`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
-  echo "USE mysql ; DELETE FROM db WHERE Db=`$1`; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "DROP DATABASE IF EXISTS \`$1\`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "USE mysql ; DELETE FROM db WHERE Db=\`$1\`; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
 }
 
 copy_table() {
