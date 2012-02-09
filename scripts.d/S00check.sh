@@ -20,14 +20,13 @@ case "$COMMAND" in
       set_message "Git $PROJECT repo already exists." error
       exit 1
     fi
+  ;;
 
   delete)
     if [ ! -d $WWW_DIR/$PROJECT ] ; then
       set_message "Project $TEMPLATE does not exist in $WWW_DIR" error
       exit 1
     fi
-  ;;
-
   ;;
 esac
 
