@@ -1,4 +1,4 @@
-#@todo: during create, make DB settings changes more robust
+#@todo: during create, make DB settings changes work with Pantheon, and imported sites.
 
 case "$COMMAND" in
   create)

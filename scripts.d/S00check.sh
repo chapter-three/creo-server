@@ -30,5 +30,12 @@ case "$COMMAND" in
       exit 1
     fi
   ;;
+
+  sandbox)
+    if [ -d $HOME/public_html/$PROJECT ] ; then
+      set_message "Sandbox already exists at $HOME/public_html/$PROJECT" error
+      exit 1
+    fi
+  ;;
 esac
 
