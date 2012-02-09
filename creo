@@ -111,7 +111,7 @@ if [[ ( $1 = 'create' || \
   exit 1
 fi
 
-# Run all script commands in ./scripts.d
-for script in $( ls ./scripts.d/S* ) ; do
+# Run all script commands in $SCRIPTDIR/scripts.d
+for script in $( ls $SCRIPTDIR/scripts.d/S* ) ; do
   source $script
 done

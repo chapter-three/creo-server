@@ -47,7 +47,7 @@ case "$COMMAND" in
   sandbox)
     set_message "Sandbox of project $PROJECT created for user $USER."
     set_message "Files are in $HOME/public_html/$PROJECT"
-    set_message "Website is at http://$PROJECT.$DOMAIN/~$USER/$PROJECT"
+    set_message "Website is at http://$PROJECT.$USER.dev.$DOMAIN/"
   ;;
 
   copy_private_db)
