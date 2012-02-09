@@ -23,8 +23,8 @@ case "$COMMAND" in
     set_message "Project $PROJECT deleted."
 
     # If solr instance exists for project, delete it.
-    if [ -d $WWW_DIR/$PROJECT ] ; then
-      echo y | $0 delete_solr $SOLR_DATA_DIR/$PROJECT
+    if [ -d $SOLR_DATA_DIR/$PROJECT ] ; then
+      echo y | $0 delete_solr $PROJECT
     fi
   ;;
 
