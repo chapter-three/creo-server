@@ -15,14 +15,16 @@ case "$COMMAND" in
     set_message "Creating symbolic link to files"
     if [ -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
       ln -s $WWW_DIR/$PROJECT/sites/all/files $HOME/public_html/$PROJECT/sites/all/files
-    fi
-
-    if [ -d $WWW_DIR/$PROJECT/files ] ; then
+      set_message "Drupal files found at $WWW_DIR/$PROJECT/sites/all/files"
+    elif [ -d $WWW_DIR/$PROJECT/files ] ; then
       ln -s $WWW_DIR/$PROJECT/files $HOME/public_html/$PROJECT/files
-    fi
-
-    if [ -d $WWW_DIR/$PROJECT/default/files ] ; then
-      ln -s $WWW_DIR/$PROJECT/default/files $HOME/public_html/$PROJECT/default/files
+      set_message "Drupal files found at $WWW_DIR/$PROJECT/files"
+    elif [ -d $WWW_DIR/$PROJECT/sites/default/files ] ; then
+      ln -s $WWW_DIR/$PROJECT/sites/default/files $HOME/public_html/$PROJECT/sites/default/files
+      set_message "Drupal files found at $WWW_DIR/$PROJECT/sites/default/files"
+    else
+      # Complain if a files directory wasn't found.
+      set_message "A files directory could not be found." warning
     fi
 
     (
