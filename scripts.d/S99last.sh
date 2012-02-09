@@ -25,7 +25,7 @@ case "$COMMAND" in
   ;;
 
   create_solr)
-    set_message "Sorl instance created for project $PROJECT."
+    set_message "Solr instance created for project $PROJECT."
   ;;
 
   delete_solr)

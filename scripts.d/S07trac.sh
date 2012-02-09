@@ -4,6 +4,7 @@ case "$COMMAND" in
   create)
     set_message "Creating Trac"
     cp -ra /var/trac/$TRAC_TEMPLATE /var/trac/$PROJECT
+    # Update Trac.ini with the new project settings
     sed -i '/file =/ d' $TRAC_DIR/$PROJECT/conf/trac.ini
     sed -i "/origin.dir/ c\origin.dir = $GITOLITE_REPO_DIR/$PROJECT.git" $TRAC_DIR/$PROJECT/conf/trac.ini
     sed -i "/repository_dir/ c\repository_dir = $GITOLITE_REPO_DIR/$PROJECT.git" $TRAC_DIR/$PROJECT/conf/trac.ini
@@ -13,6 +14,7 @@ case "$COMMAND" in
     sed -i "/alt =/ c\alt = $PROJECT" $TRAC_DIR/$PROJECT/conf/trac.ini
     sed -i "/url =/ c\url = $PROJECT.$DOMAIN" $TRAC_DIR/$PROJECT/conf/trac.ini
     sed -i "/link =/ c\link = https://$PROJECT.$DOMAIN/trac/var/" $TRAC_DIR/$PROJECT/conf/trac.ini
+
     #This bug was driving me crazy http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=634826
     set_message "Resyncing Trac with repository"
     trac-admin /var/trac/$PROJECT repository resync '*'

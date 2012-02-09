@@ -1,4 +1,3 @@
-
 backup_db() {
   #$1 is the DB name and $2 is the location to save the file
   #tests first to see if DB exists - mysqldump spits out an error if it doesn't

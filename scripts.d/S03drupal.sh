@@ -1,5 +1,3 @@
-# this takes care of getting the drupal codebase and creating the /tmp
-
 case "$COMMAND" in
   # nothing for backup, restore, create_solr, delete_solr, external, local_all, local_files, local_db, local_private_db, export, sandbox, copy_private_db, create_private_db, update_private_db, or delete_private_db
   create)

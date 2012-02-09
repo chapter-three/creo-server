@@ -15,7 +15,6 @@ copy_if_missing() {
 }
 
 case "$COMMAND" in
-  #nothing for create_solr, delete_sol local_db, local_private_db and update_private_db
   create)
     set_message "Setting up $PROJECT in Apache"
 
@@ -35,7 +34,7 @@ case "$COMMAND" in
   ;;
 
   backup)
-    set_message "Rolling up WWW"
+    set_message "Backing up WWW"
     mkdir -p $BACKUP_DIR/$PROJECT
     ( cd $WWW_DIR ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.www.tar.gz ./$PROJECT )
     ( cd $APACHE_DIR/sites-available ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.apache-sa.tar.gz $PROJECT )
@@ -45,7 +44,7 @@ case "$COMMAND" in
   ;;
 
   restore)
-    set_message "Rolling down WWW"
+    set_message "Restoring WWW"
 
     # get files in place
     mkdir -p $WWW_DIR/$PROJECT
