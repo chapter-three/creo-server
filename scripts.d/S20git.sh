@@ -61,12 +61,7 @@ case "$COMMAND" in
       # @todo: check if branch master exists
       git push origin master
     )
-
-    (
-      set_message "Cloning $PROJECT repository into $WWW_DIR/$PROJECT"
-      cd $WWW_DIR\$PROJECT
-      git pull
-    )
+    # Note the post-receive hooks will update the $WWW_DIR/$PROJECT
 
   ;;
 
