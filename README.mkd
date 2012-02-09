@@ -1,11 +1,11 @@
 Creo Project - Server
 =====================
 
-DESCRIPTION
+Description
 -----------
 Manages Drupal 6/7 projects made with Linux, Apache, MySQL, PHP, Solr, Trac, Drush, and Gitolite
 
-REQUIRED SOFTWARE
+Required Software
 -----------------
 1. Apache 2.x (Tested with 2.2.16)
 2. MySQL 5.x (Tested with 5.1.49-3)
@@ -16,12 +16,12 @@ REQUIRED SOFTWARE
 7. Trac 0.x (Tested with 0.12)
 8. Gitolite 2.x (Tested with 2/8/12 clone)
 
-NOTES
+Notes
 -----
 This script was designed/tested on Debian 6 Squeeze, and also tested on Ubuntu 10.04 Lucid Lynx.
 It may be updated in the future to work with RHEL and CentOS.
 
-INSTALLATION
+Installation
 ------------
 1. Install Apache, MySQL, PHP and Tomcat using the package manager, apt-get or aptitude.
 2. Download and install Drush in a globally accessible location. (Often in /usr or /usr/local)
@@ -67,6 +67,6 @@ INSTALLATION
 6. Copy creo.conf.sample to creo.conf and adjust the values to match your server
 7. Go!
 
-TODO
+Todo
 ----
 * Use 'dialog' to create interactive mode
