@@ -1,5 +1,5 @@
 #!/bin/bash
-# Creo Project Manager
+# Creo Server Project Manager
 # Created by eosrei, based on C3 project script by populist, joshk, and jskulski.
 
 # Stop on any errors
@@ -46,8 +46,8 @@ source $SCRIPTDIR/include/colors
 echo -e "Creo Project Manager v0.5 for Linux/Apache/MySQL/PHP/Solr/Trac/Drupal/Drush/Gitolite projects\n"
 
 # Check if creo.conf exists
-if [ ! -e $SCRIPTDIR/creo.conf ]; then
-  set_message "Configuration cannot be found. Copy creo.conf.sample to creo.conf and adjust the values." error
+if [ ! -e $SCRIPTDIR/creo-server.conf ]; then
+  set_message "Configuration cannot be found. Copy creo-server.conf.sample to creo-server.conf and adjust the values." error
   exit 1
 fi
 
