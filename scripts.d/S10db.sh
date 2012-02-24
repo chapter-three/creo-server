@@ -34,7 +34,7 @@ copy_db() {
 drop_db() {
   #$1 is DB name
   echo "DROP DATABASE IF EXISTS \`$1\`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
-  echo "USE mysql ; DELETE FROM db WHERE Db=\`$1\`; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  echo "USE mysql ; DELETE FROM db WHERE Db='$1'; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
 }
 
 copy_table() {
