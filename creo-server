@@ -52,7 +52,7 @@ if [ ! -e $SCRIPTDIR/creo-server.conf ]; then
 fi
 
 # Include creo.conf
-source $SCRIPTDIR/creo.conf
+source $SCRIPTDIR/creo-server.conf
 source $SCRIPTDIR/include/confcheck
 
 # Allow errors for shflags
