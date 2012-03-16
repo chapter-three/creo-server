@@ -18,18 +18,19 @@ case "$COMMAND" in
   sandbox)
     set_message "Creating symbolic link to files"
     if [ -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
-      #@todo: rmdir, make sure directory is empty
-      rmdir $HOME/public_html/$PROJECT/sites/all/files
-      ln -s $WWW_DIR/$PROJECT/sites/all/files $HOME/public_html/$PROJECT/sites/all/files
-      set_message "Drupal files found at $WWW_DIR/$PROJECT/sites/all/files"
+      FILES_DIR=sites/all/files
     elif [ -d $WWW_DIR/$PROJECT/files ] ; then
-      rmdir $HOME/public_html/$PROJECT/files
-      ln -s $WWW_DIR/$PROJECT/files $HOME/public_html/$PROJECT/files
-      set_message "Drupal files found at $WWW_DIR/$PROJECT/files"
+      FILES_DIR=files
     elif [ -d $WWW_DIR/$PROJECT/sites/default/files ] ; then
-      rmdir $HOME/public_html/$PROJECT/sites/default/files
-      ln -s $WWW_DIR/$PROJECT/sites/default/files $HOME/public_html/$PROJECT/sites/default/files
-      set_message "Drupal files found at $WWW_DIR/$PROJECT/sites/default/files"
+      FILES_DIR=sites/default/files
+    fi
+    if [ -n $FILES_DIR ] ; then
+      #@todo: rmdir, make sure directory is empty
+      if [ -d $HOME/public_html/$PROJECT/$FILES_DIR ] ; then
+        rmdir $HOME/public_html/$PROJECT/$FILES_DIR
+      fi
+      ln -s $WWW_DIR/$PROJECT/$FILES_DIR $HOME/public_html/$PROJECT/$FILES_DIR
+      set_message "Drupal files found at $WWW_DIR/$PROJECT/$FILES_DIR"
     else
       # Complain if a files directory wasn't found.
       set_message "A files directory could not be found." warning
