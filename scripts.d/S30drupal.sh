@@ -17,6 +17,7 @@ case "$COMMAND" in
 
   sandbox)
     set_message "Creating symbolic link to files"
+    FILES_DIR=""
     if [ -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
       FILES_DIR=sites/all/files
     elif [ -d $WWW_DIR/$PROJECT/files ] ; then
@@ -24,7 +25,7 @@ case "$COMMAND" in
     elif [ -d $WWW_DIR/$PROJECT/sites/default/files ] ; then
       FILES_DIR=sites/default/files
     fi
-    if [ -n $FILES_DIR ] ; then
+    if [ $FILES_DIR ] ; then
       #@todo: rmdir, make sure directory is empty
       if [ -d $HOME/public_html/$PROJECT/$FILES_DIR ] ; then
         rmdir $HOME/public_html/$PROJECT/$FILES_DIR
@@ -52,17 +53,18 @@ case "$COMMAND" in
     (
       set_message "Editing sites/default/settings.php to use correct database"
       cd $HOME/public_html/$PROJECT
-      # Add sites/default/settings.php to the .git/info/exclude (like .gitignore, but only this clone)
-      echo "sites/default/settings.php" >> .git/info/exclude
 
       # @todo: Must completely rewrite the DB connection strings
       sed -i "s/$TEMPLATE/$PROJECT/" sites/default/settings.php
 
-      # Add .htaccess to the .git/info/exclude
-      echo "sites/default/settings.php" >> .git/info/exclude
+      #Ignore changes to sites/default/settings.php
+      git update-index --assume-unchanged sites/default/settings.php
 
       # RewriteBase is required due to the rewrites to project.user.dev.domain.com
       echo "RewriteBase /" >> .htaccess
+
+      #Ignore changes to .htaccess
+      git update-index --assume-unchanged .htaccess
     )
 
 
