@@ -5,9 +5,13 @@ case "$COMMAND" in
       set_message "Editing sites/default/settings.php to use correct database"
       cd $WWW_DIR/$PROJECT
       # Add sites/default/settings.php to the .git/info/exclude (like .gitignore, but only this clone)
-      echo "sites/default/settings.php" >> .git/info/exclude
+      #echo "sites/default/settings.php" >> .git/info/exclude
 
       sed -i "s/$TEMPLATE/$PROJECT/" sites/default/settings.php
+
+      git add sites/default/settings.php
+      git commit -m "Update settings.php to use correct DB"
+      git push
     )
   ;;
 
@@ -54,17 +58,21 @@ case "$COMMAND" in
       set_message "Editing sites/default/settings.php to use correct database"
       cd $HOME/public_html/$PROJECT
 
+      # Add sites/default/settings.php to the .git/info/exclude (like .gitignore, but only this clone)
+      echo "sites/default/settings.php" >> .git/info/exclude
+
       # @todo: Must completely rewrite the DB connection strings
-      sed -i "s/$TEMPLATE/$PROJECT/" sites/default/settings.php
+      #sed -i "s/$TEMPLATE/$PROJECT/" sites/default/settings.php
 
       #Ignore changes to sites/default/settings.php
-      git update-index --assume-unchanged sites/default/settings.php
+      #git update-index --assume-unchanged sites/default/settings.php
+
+      #Ignore changes to .htaccess
+      git update-index --assume-unchanged .htaccess
 
       # RewriteBase is required due to the rewrites to project.user.dev.domain.com
       echo "RewriteBase /" >> .htaccess
 
-      #Ignore changes to .htaccess
-      git update-index --assume-unchanged .htaccess
     )
 
 
