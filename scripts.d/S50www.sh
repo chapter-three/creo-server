@@ -18,11 +18,11 @@ case "$COMMAND" in
   create | import)
     set_message "Setting up $PROJECT in Apache"
 
-    if [ -d $WWW_DIR/$TEMPLATE/sites/all/files ] && [ ! -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
-      cp -r $WWW_DIR/$TEMPLATE/sites/all/files $WWW_DIR/$PROJECT/sites/all/files
-    else
-      mkdir -p $WWW_DIR/$PROJECT/sites/all/files
-    fi
+    #if [ -d $WWW_DIR/$TEMPLATE/sites/all/files ] && [ ! -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
+    #  cp -r $WWW_DIR/$TEMPLATE/sites/all/files $WWW_DIR/$PROJECT/sites/all/files
+    #else
+    #  mkdir -p $WWW_DIR/$PROJECT/sites/all/files
+    #fi
 
     chown -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
     chmod -R g+w $WWW_DIR/$PROJECT
