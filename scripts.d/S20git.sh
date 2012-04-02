@@ -58,7 +58,7 @@ case "$COMMAND" in
       cd $TMP_DIR/import-repo
       git remote rename origin source
       git remote add origin $GITOLITE_REPO_ACCESS:$PROJECT
-      # @todo: check if branch master exists
+      # @todo: check if branch master exists, use different available branch if required
       git push origin master
     )
     # Note the post-receive hooks will update the $WWW_DIR/$PROJECT
@@ -106,6 +106,7 @@ case "$COMMAND" in
       mkdir $HOME/public_html
     fi
 
+    # @todo: check if branch master exists, use different available branch if required
     git clone $GITOLITE_REPO_ACCESS:$PROJECT $HOME/public_html/$PROJECT
   ;;
 esac
