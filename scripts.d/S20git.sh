@@ -58,8 +58,16 @@ case "$COMMAND" in
       cd $TMP_DIR/import-repo
       git remote rename origin source
       git remote add origin $GITOLITE_REPO_ACCESS:$PROJECT
-      # @todo: check if branch master exists, use different available branch if required
-      git push origin master
+      #Get current branch
+      BRANCH=`git branch | grep "*" | sed 's/\* //'`
+      # If branch isn't master, post a warning.
+      if [ ! $BRANCH = "master" ]; then
+        set_message "Non-standard branch selected: $BRANCH" 'warning'
+        set_message "Additional configuration is required." 'warning'
+      fi
+      # Push selected branch to origin, normally master
+      git push origin $BRANCH
+      #@todo Add a master branch? Something needs to be done to handle Pantheon project imports
     )
     # Note the post-receive hooks will update the $WWW_DIR/$PROJECT
 
