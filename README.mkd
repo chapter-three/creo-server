@@ -3,7 +3,7 @@ Creo Project - Server
 
 Description
 -----------
-Manages Drupal 6/7 projects made with Linux, Apache, MySQL, PHP, Solr, Trac, Drush, and Gitolite
+Manages Drupal 6/7 projects made with Linux, Apache, MySQL, PHP, Solr, Drush, and Gitolite
 
 Required Software
 -----------------
@@ -13,7 +13,6 @@ Required Software
 4. Drush 4.x (Tested with 4.5)
 5. Tomcat 6.x (Tested with 6.0.35-1)
 6. Solr 1.4.x or 3.5.x (Tested with 1.4.1)
-7. Trac 0.x (Tested with 0.12)
 8. Gitolite 2.x (Tested with 2/8/12 clone)
 
 Notes
@@ -60,12 +59,10 @@ Installation
     `cp apachesolr/solr-conf/schema.xml /var/solr/template_solr/conf/schema.xml`
     `cp apachesolr/solr-conf/solrconfig.xml /var/solr/template_solr/conf/solrconfig.xml`
   * `/etc/init.d/tomcat6 start`
-4. Download and setup Trac
+4. Create Apache, and Solr template files
   * Todo
-5. Create Apache, Solr, and Trac template files
-  * Todo
-6. Copy creo.conf.sample to creo.conf and adjust the values to match your server
-7. Go!
+5. Copy creo.conf.sample to creo.conf and adjust the values to match your server
+6. Go!
 
 Todo
 ----

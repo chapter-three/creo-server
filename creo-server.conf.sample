@@ -28,12 +28,6 @@ GITOLITE_REPO_DIR=/var/gitolite/repositories
 # The gitolite-admin repo clone directory for root
 GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
 
-# Directory containing Trac installations
-TRAC_DIR=/var/trac
-
-# The directory name within $TRAC_DIR to use as a template for new projects
-TRAC_TEMPLATE=template_trac
-
 # The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
 APACHE_DIR=/etc/apache2
 
