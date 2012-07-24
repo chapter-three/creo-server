@@ -23,9 +23,9 @@ It may be updated in the future to work with RHEL and CentOS.
 Installation
 ------------
 1. Download or clone the creo-server project into /usr/local/creo-server
-   sudo git clone git@github.com:chapter-three/creo-server.git /usr/local/
+  * sudo git clone git@github.com:chapter-three/creo-server.git /usr/local/
 2. Create a symbolic link from /usr/bin/creo to /usr/local/creo-server.
-   sudo ln -s /usr/local/creo-server/creo /usr/bin/creo
+  * sudo ln -s /usr/local/creo-server/creo /usr/bin/creo
 3. Copy creo.conf.sample to creo.conf and adjust the values to match your server
 4. Install Apache, MySQL, PHP and Tomcat using the package manager, apt-get or aptitude.
 5. Download and install Drush in a globally accessible location. (Installation via Pear is best)
