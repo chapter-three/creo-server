@@ -22,9 +22,14 @@ It may be updated in the future to work with RHEL and CentOS.
 
 Installation
 ------------
-1. Install Apache, MySQL, PHP and Tomcat using the package manager, apt-get or aptitude.
-2. Download and install Drush in a globally accessible location. (Often in /usr or /usr/local)
-3. Download and setup Solr for multi-instance (not multi-core.) Debian/Ubuntu instructions:
+1. Download or clone the creo-server project into /usr/local/creo-server
+   sudo git clone git@github.com:chapter-three/creo-server.git /usr/local/
+2. Create a symbolic link from /usr/bin/creo to /usr/local/creo-server.
+   sudo ln -s /usr/local/creo-server/creo /usr/bin/creo
+3. Copy creo.conf.sample to creo.conf and adjust the values to match your server
+4. Install Apache, MySQL, PHP and Tomcat using the package manager, apt-get or aptitude.
+5. Download and install Drush in a globally accessible location. (Installation via Pear is best)
+6. Download and setup Solr for multi-instance (not multi-core.) Debian/Ubuntu instructions:
   * Goto http://www.apache.org/dyn/closer.cgi and find an Apache Solr mirror.
   * `wget http://$MIRROR/apache/lucene/solr/1.4.1/apache-solr-1.4.1.tgz`
   * `tar zxf apache-solr-1.4.1.tgz`
@@ -59,10 +64,9 @@ Installation
     `cp apachesolr/solr-conf/schema.xml /var/solr/template_solr/conf/schema.xml`
     `cp apachesolr/solr-conf/solrconfig.xml /var/solr/template_solr/conf/solrconfig.xml`
   * `/etc/init.d/tomcat6 start`
-4. Create Apache, and Solr template files
+7. Create Apache, and Solr template files
   * Todo
-5. Copy creo.conf.sample to creo.conf and adjust the values to match your server
-6. Go!
+8. Go!
 
 Todo
 ----
