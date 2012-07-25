@@ -1,0 +1,59 @@
+<VirtualHost *:80>
+  ServerAdmin admin@example.com
+  ServerName PROJECT.dev.example.com
+
+  DocumentRoot /var/www/projects/PROJECT
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+  </Directory>
+  <Directory /var/www/projects/PROJECT/>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Order Allow,Deny
+    Allow from all
+  </Directory>
+
+  ErrorLog /var/log/apache2/PROJECT.error.log
+  # Possible values: debug, info, notice, warn, error, crit, alert, emerg.
+  LogLevel warn
+
+  CustomLog /var/log/apache2/PROJECT.access.log combined
+  ServerSignature On
+
+  # Stop robots from indexing host. Create robots.txt containing:
+  #   User-agent: * 
+  #   Disallow: / 
+
+#  RewriteEngine On
+#  RewriteRule  .*robots\.txt$ /var/www/default/robots.txt [L]
+</VirtualHost>
+
+#Uncomment for SSL
+#<VirtualHost *:443>
+#  SSLEngine On
+#  SSLCertificateFile /usr/local/apache2/conf/server.crt
+#  SSLCertificateKeyFile /usr/local/apache2/conf/server.key
+#  SSLCertificateChainFile /usr/local/apache2/conf/ca.crt
+#  ServerAdmin admin@example.com
+#  ServerName PROJECT.dev.example.com
+
+#  DocumentRoot /var/www/projects/PROJECT
+#  <Directory />
+#    Options FollowSymLinks
+#    AllowOverride None
+#  </Directory>
+#  <Directory /var/www/projects/PROJECT/>
+#    Options Indexes FollowSymLinks MultiViews
+#    AllowOverride All
+#    Order Allow,Deny
+#    Allow from all
+#  </Directory>
+
+#  ErrorLog /var/log/apache2/PROJECT.error.log
+#  LogLevel warn
+
+#  CustomLog /var/log/apache2/PROJECT.access.log combined
+#  ServerSignature On
+#</VirtualHost>
+
