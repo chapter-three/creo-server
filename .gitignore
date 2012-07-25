@@ -1,2 +1,3 @@
 creo-server.conf
-
+templates/a2-virtualhost
+templates/gitolite-repo.conf

@@ -87,7 +87,7 @@ case "$COMMAND" in
   ;;
 
   local_all)
-    set_message "Exporting DB."
+    set_message "Exporting DB"
     mkdir -p $HOME/${PROJECT}-${COMMAND}
     copy_db $PROJECT scratch
     backup_db scratch $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${DATESTAMP}.sql
@@ -100,7 +100,7 @@ case "$COMMAND" in
   ;;
 
   local_db | export)
-    set_message "Exporting DB."
+    set_message "Exporting DB"
     mkdir -p $HOME/${PROJECT}-${COMMAND}
     copy_db $PROJECT scratch
     backup_db scratch $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${DATESTAMP}.sql
@@ -108,7 +108,7 @@ case "$COMMAND" in
   ;;
 
   local_private_db)
-    set_message "Exporting DB."
+    set_message "Exporting DB"
     mkdir -p $HOME/${PROJECT}-${COMMAND}
     backup_db ${PROJECT}_${USER} $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${USER}_${DATESTAMP}.sql
   ;;
