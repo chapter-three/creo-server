@@ -1,0 +1,3 @@
+        repo    PROJECT
+                RW+     =   @admin
+                RW      =   @users
