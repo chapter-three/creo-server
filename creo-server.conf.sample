@@ -3,21 +3,24 @@
 # Directory to store temporary files/repos
 TMP_DIR=/tmp
 
+# Directory to store project template files, check for samples.
+PROJECT_TEMPLATE_FILES=/usr/local/creo-server/templates/
+
 # Default project template, used when -t is not specified.
-DEFAULT_TEMPLATE=drupal7
+DEFAULT_TEMPLATE=PROJECT
 
 # The root domain name to use for each project. Will be used in the form: project.DOMAIN.
-DOMAIN=
+DOMAIN=dev.example.domain
 
 # Full path to drush
-DRUSH_PATH=/usr/local/drush/drush
+DRUSH_PATH=/usr/bin/drush
 
-# Directory to store/restore backups to/from
+# Directory to store/restore backups to/from - NOT FUNCTIONAL
 BACKUP_DIR=/var/backups/codebase
 
-# MySQL username and password
-MYSQL_USERNAME=
-MYSQL_PASSWORD=
+# MySQL username and password, used for all development accounts.
+MYSQL_USERNAME=username
+MYSQL_PASSWORD=password
 
 # The user@host access string for use with Gitolite
 GITOLITE_REPO_ACCESS=git@localhost
@@ -28,7 +31,7 @@ GITOLITE_REPO_DIR=/var/gitolite/repositories
 # The gitolite-admin repo clone directory for root
 GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
 
-# The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
+# The Apache configuration directory
 APACHE_DIR=/etc/apache2
 
 # Path to the the apache2/httpd script, must accept reload, and configtest
@@ -38,8 +41,8 @@ APACHE_SERVICE_PATH=/etc/init.d/apache2
 WWW_DIR=/var/www
 
 # The user and group which will own all files/directories in $WWW_DIR
-WWW_USER=root
-WWW_GROUP=www-data
+WWW_USER=apache
+WWW_GROUP=apache
 
 # The directory name of the template for new projects (Must exist in all three directories)
 SOLR_TEMPLATE=template_solr
