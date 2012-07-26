@@ -14,7 +14,7 @@ SCRIPTNAME='creo'
 FLAGS_HELP="Usage: creo command project [-t template] [-i repository]
 
 Project commands (root required):
-create:                    create a new project from a template
+create:                    create a project bare or from a template
 import:                    import a project from a GIT repo
 backup:                    backup a project (archive) - NOT FUNCTIONAL
 restore:                   restore a project backup (unarchive) - NOT FUNCTIONAL
@@ -61,7 +61,7 @@ set +e
 source $SCRIPTDIR/include/shflags
 
 # Set shflags
-DEFINE_string template "$DEFAULT_TEMPLATE" "Use specified template instead of the default" t
+DEFINE_string template '' "Use specified template instead of the default" t
 DEFINE_string import '' "Import the specified repository, any git protocol/path is allowed" i
 
 # Parse the command-line

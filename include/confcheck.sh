@@ -10,9 +10,33 @@ if [ ! -d $PROJECT_TEMPLATE_FILES ] ; then
   exit 1
 fi
 
+# DRUSH_PATH: Full path to run drush
+if [ ! -e $DRUSH_PATH ] ; then
+  set_message "Drush executable cannot be found: $DRUSH_PATH" error
+  exit 1
+fi
+
+# BACKUP_DIR: Directory to store/restore backups to/from
+
+# DOMAIN: The root domain name to use for each project. Will be used in the form: project.DOMAIN.
+
+# ADMIN MySQL username and password; must have ability to create/drop databases
+
+# MySQL username and password; must be able to access all databases
+
+# GITOLITE_REPO_ACCESS: The user@host access string for use with Gitolite
+
+# GITOLITE_ADMIN_REPO_DIR: Directory for the gitolite-admin repo
+
 # APACHE_DIR: The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
 if [ ! -d $APACHE_DIR ] ; then
-  set_message "Apache HTTP Server cannot be found: $APACHE_DIR" error
+  set_message "Apache HTTP Server configuration cannot be found: $APACHE_DIR" error
+  exit 1
+fi
+
+# APACHE_SERVICE_PATH: Path to the the apache2/httpd script, must accept reload, and configtest
+if [ ! -e $APACHE_SERVICE_PATH ] ; then
+  set_message "Apache HTTP Server Sevice executable cannot be found: $APACHE_SERVICE_PATH" error
   exit 1
 fi
 
@@ -32,22 +56,6 @@ if ! grep -q $WWW_GROUP /etc/group; then
   set_message "WWW_GROUP: '$WWW_GROUP' does not exist" error
   exit 1
 fi
-
-# BACKUP_DIR: Directory to store/restore backups to/from
-
-# DOMAIN: The root domain name to use for each project. Will be used in the form: project.DOMAIN.
-
-# MYSQL_USERNAME & MYSQL_PASSWORD: MySQL username and password
-
-# DRUSH_PATH: Full path to run drush
-if [ ! -e $DRUSH_PATH ] ; then
-  set_message "Drush executable cannot be found: $DRUSH_PATH" error
-  exit 1
-fi
-
-# GITOLITE_REPO_ACCESS: The user@host access string for use with Gitolite
-
-# GITOLITE_ADMIN_REPO_DIR: Directory for the gitolite-admin repo
 
 # SOLR_DATA_DIR: The data directory for Solr instancesl; will contain bin, conf, and data directories
 if [ ! -d $SOLR_DATA_DIR ] ; then
@@ -74,6 +82,7 @@ if [ ! -e $TOMCAT_SERVICE_PATH ] ; then
 fi
 
 # TOMCAT_PORT: Port Tomcat is running on
+# nmap -p 80 [ip_address]?
 
 # SOLR_TEMPLATE: The template for new Solr instances, exists if README.mkd is followed
 if [ ! -d $SOLR_DATA_DIR/$SOLR_TEMPLATE ] ; then
