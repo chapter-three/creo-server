@@ -53,7 +53,7 @@ fi
 
 # Include creo.conf
 source $SCRIPTDIR/creo-server.conf
-source $SCRIPTDIR/include/confcheck
+source $SCRIPTDIR/include/confcheck.sh
 
 # Allow errors for shflags
 set +e

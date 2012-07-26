@@ -41,8 +41,8 @@ APACHE_SERVICE_PATH=/etc/init.d/apache2
 WWW_DIR=/var/www
 
 # The user and group which will own all files/directories in $WWW_DIR
-WWW_USER=apache
-WWW_GROUP=apache
+WWW_USER=www-data
+WWW_GROUP=www-data
 
 # The directory name of the template for new projects (Must exist in all three directories)
 SOLR_TEMPLATE=template_solr

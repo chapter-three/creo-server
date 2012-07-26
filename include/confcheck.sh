@@ -4,6 +4,12 @@
 
 # TMP_DIR: Directory to store temporary files/repos
 
+# PROJECT_TEMPLATE_FILES: Stores template files for creating new projects
+if [ ! -d $PROJECT_TEMPLATE_FILES ] ; then
+  set_message "Project template files directory does not exist: $PROJECT_TEMPLATE_FILES" error
+  exit 1
+fi
+
 # DEFAULT_TEMPLATE: Default project template, used when -t is not specified.
 
 # APACHE_DIR: The Apache configuration directory (Note: This script is Debian/Ubuntu specific)
@@ -20,10 +26,6 @@ if ! grep -q $WWW_GROUP /etc/group; then
   set_message "WWW_GROUP: '$WWW_GROUP' does not exist" error
   exit 1
 fi
-
-# TRAC_DIR: Directory containing Trac installations
-
-# TRAC_TEMPLATE: The directory name within $TRAC_DIR to use as a template for new projects
 
 # BACKUP_DIR: Directory to store/restore backups to/from
 
