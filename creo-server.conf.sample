@@ -18,7 +18,11 @@ DRUSH_PATH=/usr/bin/drush
 # Directory to store/restore backups to/from - NOT FUNCTIONAL
 BACKUP_DIR=/var/backups/codebase
 
-# MySQL username and password, used for all development accounts.
+# ADMIN MySQL username and password; must have ability to create/drop databases
+MYSQL_ADMIN_USERNAME=username
+MYSQL_ADMIN_PASSWORD=password
+
+# MySQL username and password; must be able to access all databases
 MYSQL_USERNAME=username
 MYSQL_PASSWORD=password
 
@@ -44,9 +48,6 @@ WWW_DIR=/var/www
 WWW_USER=www-data
 WWW_GROUP=www-data
 
-# The directory name of the template for new projects (Must exist in all three directories)
-SOLR_TEMPLATE=template_solr
-
 # The data directory for Solr instancesl; will contain bin, conf, and data directories
 SOLR_DATA_DIR=/var/solr
 
@@ -61,3 +62,6 @@ TOMCAT_SERVICE_PATH=/etc/init.d/tomcat6
 
 # Port Tomcat is running on
 TOMCAT_PORT=8983
+
+# The directory name of the template for new projects
+SOLR_TEMPLATE=TEMPLATE

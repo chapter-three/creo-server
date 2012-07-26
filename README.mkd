@@ -23,30 +23,30 @@ It may be updated in the future to work with RHEL and CentOS.
 Installation
 ------------
 1. Download or clone the creo-server project into /usr/local/creo-server
-  * sudo git clone git@github.com:chapter-three/creo-server.git /usr/local/
+  * `git clone git@github.com:chapter-three/creo-server.git /usr/local/`
 2. Create a symbolic link from /usr/bin/creo to /usr/local/creo-server.
-  * sudo ln -s /usr/local/creo-server/creo /usr/bin/creo
+  * `ln -s /usr/local/creo-server/creo /usr/bin/creo`
 3. Copy creo.conf.sample to creo.conf and adjust the values to match your server
-4. Install Apache, MySQL, PHP and Tomcat using the package manager, apt-get or aptitude.
+4. Install Apache, MySQL, PHP and Tomcat6 using the package manager, apt-get or aptitude.
 5. Download and install Drush in a globally accessible location. (Installation via Pear is best)
 6. Download and setup Solr for multi-instance (not multi-core.) Debian/Ubuntu instructions:
   * Goto http://www.apache.org/dyn/closer.cgi and find an Apache Solr mirror.
-  * `wget http://$MIRROR/apache/lucene/solr/1.4.1/apache-solr-1.4.1.tgz`
-  * `tar zxf apache-solr-1.4.1.tgz`
+  * `wget http://$MIRROR/apache/lucene/solr/3.6.1/apache-solr-3.6.1.tgz` (commands may differ for different versions)
+  * `tar zxf apache-solr-3.6.1.tgz`
   * `/etc/init.d/tomcat6 stop`
-  * `cp apache-solr-1.4.1/dist/apache-solr-1.4.1.war /var/lib/tomcat6/webapps/solr.war`
+  * `cp apache-solr-3.6.1/dist/apache-solr-3.6.1.war /var/lib/tomcat6/webapps/solr.war`
   * `/etc/init.d/tomcat6 start` (This creates the /var/lib/tomcat6/webapps/solr directory)
   * `/etc/init.d/tomcat6 stop`
-  * `cp -aR /var/lib/tomcat6/webapps/solr /var/lib/tomcat6/webapps/template_solr`
-  * `mkdir -p /var/solr/template_solr`
-  * `cp -aR apache-solr-1.4.1/example/solr/* /var/solr/template_solr`
-  * `pico /etc/tomcat6/Catalina/localhost/template_solr.xml` (use vim/vi if you want!)
+  * `cp -aR /var/lib/tomcat6/webapps/solr /var/lib/tomcat6/webapps/TEMPLATE`
+  * `mkdir -p /var/solr/TEMPLATE`
+  * `cp -aR apache-solr-3.6.1/example/solr/* /var/solr/TEMPLATE`
+  * `pico /etc/tomcat6/Catalina/localhost/TEMPLATE.xml` (use vim/vi if you want!)
   * Paste in the following and save (Save CTRL-X then enter):
     <Context docBase="/var/lib/tomcat6/webapps/solr.war" debug="0" crossContext="true" >
-      <Environment name="solr/home" type="java.lang.String" value="/var/solr/template_solr" override="true" />
+      <Environment name="solr/home" type="java.lang.String" value="/var/solr/TEMPLATE" override="true" />
     </Context>
   * Change the Tomcat server port from the default 8080 to 8983(or any other port of your choice)
-    pico /etc/tomcat6/server.xml and change:
+    `pico /etc/tomcat6/server.xml` and change:
     <Connector port="8080" protocol="HTTP/1.1"
                connectionTimeout="20000"
                URIEncoding="UTF-8"
@@ -60,9 +60,9 @@ Installation
     `wget http://ftp.drupal.org/files/projects/apachesolr-7.x-1.x-dev.tar.gz`
   * `tar zxf apachesolr-7.x-1.x-dev.tar.gz`
   * Replace the Solr XML config files:
-    `cp apachesolr/solr-conf/protwords.txt /var/solr/template_solr/conf/protwords.txt`
-    `cp apachesolr/solr-conf/schema.xml /var/solr/template_solr/conf/schema.xml`
-    `cp apachesolr/solr-conf/solrconfig.xml /var/solr/template_solr/conf/solrconfig.xml`
+    `cp apachesolr/solr-conf/protwords.txt /var/solr/TEMPLATE/conf/protwords.txt`
+    `cp apachesolr/solr-conf/schema-solr3x.xml /var/solr/TEMPLATE/conf/schema.xml`
+    `cp apachesolr/solr-conf/solrconfig-solr3x.xml /var/solr/TEMPLATE/conf/solrconfig.xml`
   * `/etc/init.d/tomcat6 start`
 7. Create Apache, and Solr template files
   * Todo

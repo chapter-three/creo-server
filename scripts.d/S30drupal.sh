@@ -4,8 +4,6 @@ case "$COMMAND" in
     (
       set_message "Editing sites/default/settings.php to use correct database"
       cd $WWW_DIR/$PROJECT
-      # Add sites/default/settings.php to the .git/info/exclude (like .gitignore, but only this clone)
-      #echo "sites/default/settings.php" >> .git/info/exclude
 
       sed -i "s/$TEMPLATE/$PROJECT/" sites/default/settings.php
 
@@ -21,6 +19,9 @@ case "$COMMAND" in
 
   sandbox)
     set_message "Creating symbolic link to files"
+    # Todo: If DB is available check db for location
+    # D6: file_directory_path
+    # D7: file_public_path
     FILES_DIR=""
     if [ -d $WWW_DIR/$PROJECT/sites/all/files ] ; then
       FILES_DIR=sites/all/files
