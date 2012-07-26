@@ -28,7 +28,7 @@ case "$COMMAND" in
     chmod -R g+w $WWW_DIR/$PROJECT
 
     # set up apache
-    sed "s/$TEMPLATE/$PROJECT/" $APACHE_DIR/sites-available/$TEMPLATE > $APACHE_DIR/sites-available/$PROJECT
+    sed "s/PROJECT/$PROJECT/" $PROJECT_TEMPLATE_FILES/a2-virtualhost > $APACHE_DIR/sites-available/$PROJECT
     a2ensite $PROJECT
     $APACHE_SERVICE_PATH reload
   ;;

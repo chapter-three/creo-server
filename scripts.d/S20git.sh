@@ -5,10 +5,10 @@ create_repo() {
   (
     set_message "Copy gitolite $TEMPLATE conf to $PROJECT project conf"
     cd $GITOLITE_ADMIN_REPO_DIR
-    cp conf/repos/$TEMPLATE.conf conf/repos/$PROJECT.conf
+    cp $PROJECT_TEMPLATE_FILES/gitolite-repo.conf conf/repos/$PROJECT.conf
 
-    # Change the repo name in the file from $TEMPLATE to $PROJECT
-    sed -i "s/$TEMPLATE/$PROJECT/" conf/repos/$PROJECT.conf
+    # Change the repo name in the file from PROJECT to $PROJECT
+    sed -i "s/PROJECT/$PROJECT/" conf/repos/$PROJECT.conf
 
     # Add the new file to the repo
     git add conf/repos/$PROJECT.conf
@@ -24,7 +24,6 @@ create_repo() {
 case "$COMMAND" in
   create)
     create_repo
-
     (
       set_message "Cloning $TEMPLATE template into $WWW_DIR/$PROJECT"
       cd $WWW_DIR
@@ -98,13 +97,6 @@ case "$COMMAND" in
     rm -rf $GITOLITE_REPO_DIR/$PROJECT.git
 
   ;;
-
-#  local_all)
-#    echo "Getting an export of the trunk for local dev"
-#    mkdir -p $HOME/${PROJECT}-${COMMAND}
-#    svn co https://$PROJECT.$DOMAIN/svn/trunk/ $HOME/${PROJECT}-${COMMAND}/$PROJECT
-#  ;;
-
 
   sandbox)
     set_message "Creating $PROJECT sandbox for $USER"
