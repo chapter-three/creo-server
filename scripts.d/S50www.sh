@@ -25,7 +25,7 @@ case "$COMMAND" in
     #fi
 
     chown -R $WWW_USER:$WWW_GROUP $WWW_DIR/$PROJECT
-    chmod -R g+w $WWW_DIR/$PROJECT
+    #chmod -R g+w $WWW_DIR/$PROJECT
 
     # set up apache
     sed "s/PROJECT/$PROJECT/" $PROJECT_TEMPLATE_FILES/a2-virtualhost > $APACHE_DIR/sites-available/$PROJECT

@@ -26,7 +26,7 @@ create_repo() {
 case "$COMMAND" in
   create)
     create_repo
-    (
+   (
       set_message "Cloning $TEMPLATE template into $WWW_DIR/$PROJECT"
       cd $WWW_DIR
       git clone $GITOLITE_REPO_ACCESS:$TEMPLATE $PROJECT
@@ -47,12 +47,8 @@ case "$COMMAND" in
   import)
     create_repo
 
-    (
-      set_message "Cloning $PROJECT empty repository into $WWW_DIR/$PROJECT"
-      cd $WWW_DIR
-      git clone $GITOLITE_REPO_ACCESS:$PROJECT $PROJECT
-    )
-
+    set_message "Cloning $PROJECT empty repository into $WWW_DIR/$PROJECT"
+    su - git -c "git clone $GITOLITE_REPO_DIR/$PROJECT.git $WWW_DIR/$PROJECT"
 
     set_message "Importing $IMPORT_REPO into $PROJECT repository."
     (
@@ -77,13 +73,13 @@ case "$COMMAND" in
   backup)
     set_message "Backing up GIT"
     mkdir -p $BACKUP_DIR/$PROJECT
-    tar cf $BACKUP_DIR/$PROJECT/$PROJECT.svn.tar.gz $GITOLITE_REPO_DIR/$PROJECT.git
+    tar cf $BACKUP_DIR/$PROJECT/$PROJECT.git.tar.gz $GITOLITE_REPO_DIR/$PROJECT.git
   ;;
 
   restore)
     set_message "Restoring GIT"
     mkdir -p $GITOLITE_REPO_DIR/$PROJECT.git
-    tar xf $BACKUP_DIR/$PROJECT/$PROJECT.svn.tar.gz -C $GITOLITE_REPO_DIR/$PROJECT.git
+    tar xf $BACKUP_DIR/$PROJECT/$PROJECT.git.tar.gz -C $GITOLITE_REPO_DIR/$PROJECT.git
     #@todo Add back to gitolite, if needed.
   ;;
 

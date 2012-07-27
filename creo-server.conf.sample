@@ -30,7 +30,7 @@ MYSQL_PASSWORD=password
 GITOLITE_REPO_ACCESS=git@localhost
 
 # The directory where all gitolite repos are stored
-GITOLITE_REPO_DIR=/var/gitolite/repositories
+GITOLITE_REPO_DIR=/home/git/repositories
 
 # The gitolite-admin repo clone directory for root
 GITOLITE_ADMIN_REPO_DIR=/root/gitolite-admin
