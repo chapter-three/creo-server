@@ -5,6 +5,8 @@ create_repo() {
   (
     set_message "Copy gitolite $TEMPLATE conf to $PROJECT project conf"
     cd $GITOLITE_ADMIN_REPO_DIR
+    #Make directory if it doesn't exist
+    mkdir -p $GITOLITE_ADMIN_REPO_DIR/conf/repos/
     cp $PROJECT_TEMPLATE_FILES/gitolite-repo.conf conf/repos/$PROJECT.conf
 
     # Change the repo name in the file from PROJECT to $PROJECT

@@ -42,11 +42,11 @@ APACHE_DIR=/etc/apache2
 APACHE_SERVICE_PATH=/etc/init.d/apache2
 
 # The directory to store the web accessible clones of projects
-WWW_DIR=/var/www
+WWW_DIR=/var/www/projects
 
-# The user and group which will own all files/directories in $WWW_DIR
-WWW_USER=www-data
-WWW_GROUP=www-data
+# The user and group which will own all files/directories in $WWW_DIR, easier if gitolite owns everything
+WWW_USER=git
+WWW_GROUP=git
 
 # The data directory for Solr instancesl; will contain bin, conf, and data directories
 SOLR_DATA_DIR=/var/solr

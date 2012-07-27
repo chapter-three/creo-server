@@ -20,7 +20,7 @@ create_db() {
   #$1 is the DB name
   echo "DROP DATABASE IF EXISTS \`$1\`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
   echo "CREATE DATABASE IF NOT EXISTS \`$1\`" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
-  echo "GRANT ALL ON \`$1\`.* TO '$MYSQL_USERNAME'@'localhost'; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
+  #echo "GRANT ALL ON \`$1\`.* TO '$MYSQL_USERNAME'@'localhost'; FLUSH PRIVILEGES;" | mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
 }
 
 copy_db() {

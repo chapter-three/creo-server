@@ -71,3 +71,4 @@ Installation
 Todo
 ----
 * Use 'dialog' to create interactive mode
+* Rollback changes on error
