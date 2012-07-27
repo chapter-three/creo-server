@@ -1,0 +1,29 @@
+#!/bin/sh
+#Created 2012 by Brad Erickson - eosrei
+
+#from http://stackoverflow.com/questions/5583139/how-can-git-post-receive-hook-get-name-of-repo-it-is-running-on
+if [ $(git rev-parse --is-bare-repository) = true ]
+then
+  REPOSITORY=$(basename "$PWD")
+  REPOSITORY=${REPOSITORY%.git}
+else
+  REPOSITORY=$(basename $(readlink -nf "$PWD"/..))
+fi
+
+echo REPOSITORY: $REPOSITORY
+REPOSITORY_DIR=$PWD;
+# Should be /home/git/repositories/$REPOSITORY_BASENAME
+
+# Don't do anything else with the gitolite-admin repo
+if [ $REPOSITORY = 'gitolite-admin' ]
+then
+  exit 0
+fi
+
+cd /var/www/projects/$REPOSITORY
+echo WWW DIRECTORY: $PWD
+
+#GIT_DIR is . by default, so remove that.
+unset GIT_DIR
+git pull -f
+
