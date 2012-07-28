@@ -25,5 +25,6 @@ echo WWW DIRECTORY: $PWD
 
 #GIT_DIR is . by default, so remove that.
 unset GIT_DIR
+git reset --hard
 git pull -f
 
