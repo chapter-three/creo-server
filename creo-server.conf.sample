@@ -4,7 +4,7 @@
 TMP_DIR=/tmp
 
 # Directory to store project template files, check for samples.
-PROJECT_TEMPLATE_FILES=/usr/local/creo-server/templates/
+PROJECT_TEMPLATE_FILES=/usr/local/creo-server/templates
 
 # Default project template, used when -t is not specified.
 DEFAULT_TEMPLATE=PROJECT
@@ -63,5 +63,5 @@ TOMCAT_SERVICE_PATH=/etc/init.d/tomcat6
 # Port Tomcat is running on
 TOMCAT_PORT=8983
 
-# The directory name of the template for new projects
+# The directory name of the template for new projects (Must exist in all three directories)
 SOLR_TEMPLATE=TEMPLATE
