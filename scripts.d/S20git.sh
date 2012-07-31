@@ -47,9 +47,6 @@ case "$COMMAND" in
   import)
     create_repo
 
-    set_message "Cloning $PROJECT empty repository into $WWW_DIR/$PROJECT"
-    su - git -c "git clone $GITOLITE_REPO_DIR/$PROJECT.git $WWW_DIR/$PROJECT"
-
     set_message "Importing $IMPORT_REPO into $PROJECT repository."
     (
       cd $TMP_DIR/import-repo
@@ -66,6 +63,9 @@ case "$COMMAND" in
       git push origin $BRANCH
       #@todo Add a master branch? Something needs to be done to handle Pantheon project imports
     )
+
+    set_message "Cloning $PROJECT repository into $WWW_DIR/$PROJECT"
+    su - git -c "git clone $GITOLITE_REPO_DIR/$PROJECT.git $WWW_DIR/$PROJECT"
     # Note the post-receive hooks will update the $WWW_DIR/$PROJECT
 
   ;;

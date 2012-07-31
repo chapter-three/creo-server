@@ -2,8 +2,7 @@
 #Created 2012 by Brad Erickson - eosrei
 
 #from http://stackoverflow.com/questions/5583139/how-can-git-post-receive-hook-get-name-of-repo-it-is-running-on
-if [ $(git rev-parse --is-bare-repository) = true ]
-then
+if [ $(git rev-parse --is-bare-repository) = true ]; then
   REPOSITORY=$(basename "$PWD")
   REPOSITORY=${REPOSITORY%.git}
 else
@@ -20,11 +19,14 @@ then
   exit 0
 fi
 
-cd /var/www/projects/$REPOSITORY
-echo WWW DIRECTORY: $PWD
+#If clone exists, then update it
+if [ -d /var/www/projects/$REPOSITORY ]; then
+  cd /var/www/projects/$REPOSITORY
+  echo WWW DIRECTORY: $PWD
 
-#GIT_DIR is . by default, so remove that.
-unset GIT_DIR
-git reset --hard
-git pull -f
+  #GIT_DIR is . by default, so remove that.
+  unset GIT_DIR
+  git pull -f
+  git reset --hard
+fi
 
