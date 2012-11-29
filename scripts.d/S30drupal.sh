@@ -56,7 +56,6 @@ case "$COMMAND" in
     fi
 
     (
-      set_message "Editing sites/default/settings.php to use correct database"
       cd $HOME/public_html/$PROJECT
 
       # Add sites/default/settings.php to the .git/info/exclude (like .gitignore, but only this clone)
@@ -69,10 +68,7 @@ case "$COMMAND" in
       #git update-index --assume-unchanged sites/default/settings.php
 
       #Ignore changes to .htaccess
-      git update-index --assume-unchanged .htaccess
-
-      # RewriteBase is required due to the rewrites to project.user.dev.domain.com
-      echo "RewriteBase /" >> .htaccess
+      #git update-index --assume-unchanged .htaccess
 
     )
 

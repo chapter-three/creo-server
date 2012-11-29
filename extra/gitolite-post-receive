@@ -26,7 +26,15 @@ if [ -d /var/www/projects/$REPOSITORY ]; then
 
   #GIT_DIR is . by default, so remove that.
   unset GIT_DIR
+  umask 0022
+  # Record unwriteable files.
+  NOWRITEFILES=$(find * ! -perm -u+w)
+  # Change permission to writeable
+  chmod u+w $NOWRITEFILES
+  # Get the changes
   git pull -f
   git reset --hard
+  # Change permission back to unwritable
+  chmod u-w $NOWRITEFILES
 fi
 
