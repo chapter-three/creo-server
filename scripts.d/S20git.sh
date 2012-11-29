@@ -39,7 +39,7 @@ case "$COMMAND" in
       # Change the origin to be the new PROJECT repo
       git remote rename origin $TEMPLATE
       git remote add origin $GITOLITE_REPO_ACCESS:$PROJECT
-      git push origin master
+      git push origin master --tags
       git config --local branch.master.remote origin
     )
   ;;
@@ -60,7 +60,7 @@ case "$COMMAND" in
         set_message "Additional configuration is required." 'warning'
       fi
       # Push selected branch to origin, normally master
-      git push origin $BRANCH
+      git push origin $BRANCH --tags
       #@todo Add a master branch? Something needs to be done to handle Pantheon project imports
     )
 
