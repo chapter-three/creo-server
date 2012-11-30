@@ -38,10 +38,9 @@ case "$COMMAND" in
 
   local_all | local_files | local_db | local_private_db | export)
     set_message "Packaging $COMMAND files..."
-    cp -r ../local_scripts/update* $HOME/${PROJECT}-${COMMAND}/
-    cd $HOME ; zip -r ${PROJECT}-${COMMAND}-${DATESTAMP}.zip $PROJECT-${COMMAND}
+    cd $HOME ; tar zcf ${PROJECT}-${COMMAND}-${DATESTAMP}.tar.gz $PROJECT-${COMMAND}
     rm -rf $HOME/${PROJECT}-${COMMAND}
-    set_message "$COMMAND copy of $PROJECT saved to $HOME/${PROJECT}-${COMMAND}-${DATESTAMP}.zip"
+    set_message "$COMMAND copy of $PROJECT saved to $HOME/${PROJECT}-${COMMAND}-${DATESTAMP}.tar.gz"
   ;;
 
   sandbox)

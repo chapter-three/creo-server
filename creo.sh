@@ -24,7 +24,7 @@ delete_solr:               delete Solr instance for a project
 
 Project commands (root not required):
 local_files:               dumps a copy of the project files - NOT FUNCTIONAL
-local_db:                  dumps a copy of the project db - NOT FUNCTIONAL
+local_db:                  dumps a copy of the project db
 local_private_db:          dumps a copy of the project private sandbox db - NOT FUNCTIONAL
 
 Sandbox commands (root not required)

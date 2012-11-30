@@ -101,10 +101,8 @@ case "$COMMAND" in
 
   local_db | export)
     set_message "Exporting DB"
-    mkdir -p $HOME/${PROJECT}-${COMMAND}
-    copy_db $PROJECT scratch
-    backup_db scratch $HOME/${PROJECT}-${COMMAND}/${PROJECT}_${DATESTAMP}.sql
-    drop_db scratch
+    mkdir -p $HOME/${PROJECT}
+    backup_db $PROJECT $HOME/${PROJECT}/${PROJECT}_${DATESTAMP}.sql
   ;;
 
   local_private_db)
