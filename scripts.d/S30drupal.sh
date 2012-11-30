@@ -3,7 +3,7 @@ case "$COMMAND" in
 
     (
       set_message "Editing sites/default/settings.php to use correct database"
-      cd $WWW_DIR/$PROJECT
+      cd $TMP_DIR/$PROJECT
 
       sed -i "s/$TEMPLATE/$PROJECT/" sites/default/settings.php
 

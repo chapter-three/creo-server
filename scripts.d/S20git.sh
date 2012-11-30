@@ -26,21 +26,23 @@ create_repo() {
 case "$COMMAND" in
   create)
     create_repo
-   (
-      set_message "Cloning $TEMPLATE template into $WWW_DIR/$PROJECT"
-      cd $WWW_DIR
-      git clone $GITOLITE_REPO_ACCESS:$TEMPLATE $PROJECT
-    )
+    set_message "Cloning $TEMPLATE template into $TMP_DIR/$PROJECT"
+    # Delete the old project
+    rm -rf $TMP_DIR/$PROJECT
+    git clone $GITOLITE_REPO_ACCESS:$TEMPLATE $TMP_DIR/$PROJECT
+
+    set_message "Cloning $TEMPLATE template into $WWW_DIR/$PROJECT"
+    su - $WWW_USER -c "git clone $GITOLITE_REPO_DIR/$PROJECT.git $WWW_DIR/$PROJECT"
 
     (
       set_message "Changing origin to $PROJECT repo"
-      cd $WWW_DIR/$PROJECT
+      cd $TMP_DIR/$PROJECT
 
       # Change the origin to be the new PROJECT repo
-      git remote rename origin $TEMPLATE
+      git remote rm origin
       git remote add origin $GITOLITE_REPO_ACCESS:$PROJECT
+      # Update tmp repo and www_dir repo
       git push origin master --tags
-      git config --local branch.master.remote origin
     )
   ;;
 
@@ -61,11 +63,11 @@ case "$COMMAND" in
       fi
       # Push selected branch to origin, normally master
       git push origin $BRANCH --tags
-      #@todo Add a master branch? Something needs to be done to handle Pantheon project imports
+      #@todo Add a master branch? Something needs to be done to handle Pantheon V1 project imports
     )
 
     set_message "Cloning $PROJECT repository into $WWW_DIR/$PROJECT"
-    su - git -c "git clone $GITOLITE_REPO_DIR/$PROJECT.git $WWW_DIR/$PROJECT"
+    su - $WWW_USER -c "git clone $GITOLITE_REPO_DIR/$PROJECT.git $WWW_DIR/$PROJECT"
     # Note the post-receive hooks will update the $WWW_DIR/$PROJECT
 
   ;;
