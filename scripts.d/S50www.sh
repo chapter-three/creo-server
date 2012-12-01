@@ -33,16 +33,6 @@ case "$COMMAND" in
     $APACHE_SERVICE_PATH reload
   ;;
 
-  backup)
-    set_message "Backing up WWW"
-    mkdir -p $BACKUP_DIR/$PROJECT
-    ( cd $WWW_DIR ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.www.tar.gz ./$PROJECT )
-    ( cd $APACHE_DIR/sites-available ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.apache-sa.tar.gz $PROJECT )
-    if [ -e $APACHE_DIR/htpasswds/$PROJECT.auth ]; then
-      ( cd $APACHE_DIR/htpasswds ; tar czf $BACKUP_DIR/$PROJECT/$PROJECT.htpasswds.tar.gz $PROJECT.auth )
-    fi
-  ;;
-
   restore)
     set_message "Restoring WWW"
 

@@ -16,7 +16,7 @@ FLAGS_HELP="Usage: creo command project [-t template] [-i repository]
 Project commands (root required):
 create:                    create a project bare or from a template
 import:                    import a project from a GIT repo
-backup:                    backup a project (archive) - NOT FUNCTIONAL
+backup:                    backup a project (archive)
 restore:                   restore a project backup (unarchive) - NOT FUNCTIONAL
 delete:                    delete project
 create_solr:               create Solr instance for a project
@@ -63,6 +63,7 @@ source $SCRIPTDIR/include/shflags
 # Set shflags
 DEFINE_string template '' "Use specified template instead of the default" t
 DEFINE_string import '' "Import the specified repository, any git protocol/path is allowed" i
+DEFINE_boolean yes false "Assume 'yes' as answer to all prompts." y
 
 # Parse the command-line
 FLAGS "$@" || exit $?
@@ -77,6 +78,7 @@ PROJECT=$2
 TEMPLATE=${FLAGS_template}
 IMPORT_REPO=${FLAGS_import}
 DATESTAMP=`date +%Y%m%d%H%M%S`
+YES=${FLAGS_yes}
 
 # Check for at least two arguments
 if ! [ $# -ge 2 ]; then

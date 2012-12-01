@@ -70,7 +70,12 @@ case "$COMMAND" in
   ;;
 esac
 
-read -p " (y/n)? " ANSWER
-if [ ${ANSWER} != "y" ]; then
-  exit 1
+if [ $YES == 0 ]; then
+  echo " (y/n)? y"
+else
+  read -p " (y/n)? " ANSWER
+  if [ ${ANSWER} != "y" ]; then
+    exit 1
+  fi
 fi
+

@@ -11,7 +11,7 @@ case "$COMMAND" in
 
   backup)
     set_message "Project $PROJECT backed up."
-    $0 delete $PROJECT
+    #$0 delete $PROJECT
   ;;
 
   restore)

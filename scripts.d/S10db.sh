@@ -70,15 +70,6 @@ case "$COMMAND" in
 
   ;;
 
-  backup)
-    set_message "Rolling up DB"
-    mkdir -p $BACKUP_DIR/$PROJECT
-    copy_db $PROJECT scratch
-    backup_db scratch $BACKUP_DIR/$PROJECT/$PROJECT.sql
-    gzip $BACKUP_DIR/$PROJECT/$PROJECT.sql
-    drop_db scratch
-  ;;
-
   restore)
     backup_db $PROJECT $HOME/${PROJECT}_${DATESTAMP}.sql
     set_message "Rolling down DB"

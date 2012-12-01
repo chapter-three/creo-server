@@ -72,12 +72,6 @@ case "$COMMAND" in
 
   ;;
 
-  backup)
-    set_message "Backing up GIT"
-    mkdir -p $BACKUP_DIR/$PROJECT
-    tar cf $BACKUP_DIR/$PROJECT/$PROJECT.git.tar.gz $GITOLITE_REPO_DIR/$PROJECT.git
-  ;;
-
   restore)
     set_message "Restoring GIT"
     mkdir -p $GITOLITE_REPO_DIR/$PROJECT.git
