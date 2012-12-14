@@ -77,7 +77,7 @@ COMMAND=$1
 PROJECT=$2
 TEMPLATE=${FLAGS_template}
 IMPORT_REPO=${FLAGS_import}
-DATESTAMP=`date +%Y%m%d%H%M%S`
+DATESTAMP=`date +%Y-%m-%d-%H:%M:%S`
 YES=${FLAGS_yes}
 
 # Check for at least two arguments
