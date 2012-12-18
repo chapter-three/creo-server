@@ -8,7 +8,7 @@ case "$COMMAND" in
     drush archive-backup -r $WWW_DIR/$PROJECT --generator "Creo Project Manager"  --destination=$BACKUP_DIR/$PROJECT-$DATESTAMP.tar.gz  --overwrite
     filesize=$(stat --format="%s" $BACKUP_DIR/$PROJECT-$DATESTAMP.tar.gz)
     # If file size greater than 4GB, split and delete original
-    if [ $filesize > 4294967296 ]; then
+    if [ $filesize -gt 4294967296 ]; then
       split -b 4G -d $BACKUP_DIR/$PROJECT-$DATESTAMP.tar.gz $BACKUP_DIR/$PROJECT-$DATESTAMP.tar.gz.split_
       rm $BACKUP_DIR/$PROJECT-$DATESTAMP.tar.gz
     fi
