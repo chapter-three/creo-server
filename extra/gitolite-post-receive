@@ -39,7 +39,7 @@ if [ -d /var/www/projects/$REPOSITORY ]; then
   git reset --hard HEAD
   # Get the changes
   git pull -f
-  if [ -z "$NOWRITEFILES" ]; then
+  if [ -n "$NOWRITEFILES" ]; then
     # Change permission back to unwritable
     chmod u-w $NOWRITEFILES
   fi
