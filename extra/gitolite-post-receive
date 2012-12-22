@@ -29,15 +29,19 @@ if [ -d /var/www/projects/$REPOSITORY ]; then
   umask 0022
   # Record unwriteable files.
   NOWRITEFILES=$(find * ! -perm -u+w)
-  # Change permission to writeable
-  chmod u+w $NOWRITEFILES
+  if [ -n "$NOWRITEFILES" ]; then
+    # Change permission to writeable
+    chmod u+w $NOWRITEFILES
+  fi
   # Clean the directory
   git clean -d -f
   # Reset the files
   git reset --hard HEAD
   # Get the changes
   git pull -f
-  # Change permission back to unwritable
-  chmod u-w $NOWRITEFILES
+  if [ -z "$NOWRITEFILES" ]; then
+    # Change permission back to unwritable
+    chmod u-w $NOWRITEFILES
+  fi
 fi
 
