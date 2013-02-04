@@ -10,10 +10,8 @@ for many use cases, but a lot of work is needed. Ideally it would be rewritten i
 Chef/Ansible/etc for the initial configuration. But you know... time.
 
 There are many security considerations with using this. This is NOT for client production hosting, this is
-for development only. Only employees and contractors should have SSH access to a server running this script. Very
-few users should have sudo to be the people adding/importing projects, most users will just make sandboxes.
-
-In the future, it should support additional security permissions and meta data database storage for an external API.
+for development only. Only employees and contractors should have SSH access to a server running this script. 
+Only a few users should have sudo for adding/importing projects, most users will simply make "sandboxes."
 
 Requires significant server configuration. Review INSTALL.mkd for setup from a bare Ubuntu install.
 
@@ -102,3 +100,5 @@ Todo
 ----
 * Use 'dialog' to create interactive mode
 * Rollback changes on error
+* Metadata storage in MySQL or flat file.
+* Additional security for databases, and PHP.
