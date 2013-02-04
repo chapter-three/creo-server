@@ -1,9 +1,35 @@
 Creo Project - Server
 =====================
 
+A barebones Drupal 6/7 development server management script using Apache, MySQL, PHP, Solr, Drush, and Gitolite.
+
 Description
 -----------
-Manages Drupal 6/7 projects made with Linux, Apache, MySQL, PHP, Solr, Drush, and Gitolite
+Creo is an updated and re-organized version of the original C3 dev project management script. The script works well
+for many use cases, but a lot of work is needed. Ideally it would be rewritten in PHP/Ruby/Python and use
+Chef/Ansible/etc for the initial configuration. But you know... time.
+
+There are many security considerations with using this. This is NOT for client production hosting, this is
+for development only. Only employees and contractors should have SSH access to a server running this script. Very
+few users should have sudo.
+
+In the future, it should support additional security permissions and meta data database storage for an external API.
+
+Requires significant server configuration. Review INSTALL.mkd.
+
+Example Usage
+-------------
+Create a project from an existing project:
+`sudo creo create PROJECT -t OLD_PROJECT
+
+Import an existing project repo (make the code into a repo, and don't add Drupal files directory):
+`sudo creo import PROJECT -i /root/PROJECT-REPO`
+`sudo tar zxf PROJECT-FILES.tar.gz -C /var/www/projects/PROJECT/sites/default/`
+`sudo chown git:git -R /var/www/projects/PROJECT/sites/default/`
+`mysql PROJECT < PROJECT.sql`
+
+Make a code sandbox in /home/user/public_html to be available at http://project.user.dev.example.com:
+`creo sandbox PROJECT`
 
 Required Software
 -----------------
@@ -22,6 +48,7 @@ It may be updated in the future to work with RHEL and CentOS.
 
 Installation
 ------------
+0. Follow server setup details in INSTALL.mkd
 1. Download or clone the creo-server project into /usr/local/creo-server
   * `git clone git@github.com:chapter-three/creo-server.git /usr/local/`
 2. Create a symbolic link from /usr/bin/creo to /usr/local/creo-server.

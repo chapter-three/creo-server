@@ -1,0 +1,133 @@
+
+Base Server Configuration - Ubunutu 12.04 LTS 64-bit
+
+1.  apt-get update
+2.  apt-get upgrade
+3.  apt-get install apache2 libapache2-mod-php5 mysql-server php5-mysql php5-gd php-pear php5-dev php5-curl apache2-dev git-core memcached php5-memcache make tomcat6 fail2ban s3cmd
+4.  apt-get install sendmail
+5.  ^^^ Optional
+6.  echo $SERVERNAME &gt; /etc/hostname
+7.  hostname $SERVERNAME
+8.  adduser git
+9.  Needed later. Use long random password and then forget it.
+10. adduser $USERNAME
+11. Create a user regular user account
+12. addgroup admin
+13. usermod -G admin $USERNAME
+14. pico /etc/sudoers
+15. Removes password from sudo usage
+16. Change:  
+    %admin ALL=(ALL) ALL
+17. to:  
+    %admin ALL=(ALL) NOPASSWD: ALL
+18. su - $USERNAME
+19. ssh-keygen
+20. Generate keys or use your own
+21. pico .ssh/authorized_keys
+22. Add the user’s public key(s)
+23. chmod 600 .ssh/authorized_keys
+24. Now test login and admin access in a new terminal window
+25. logout
+26. pico /etc/ssh/sshd_config
+27. Disable password, and require public key for login
+28. Change or add the following settings:  
+    ChallengeResponseAuthentication no  
+    PasswordAuthentication no
+29. /etc/init.d/ssh reload
+30. pico /etc/hosts
+31. add:  
+    x.x.x.x $SERVERNAME.example.com $SERVERNAME
+32. pecl install apc
+33. echo "extension=apc.so" &gt; /etc/php5/apache2/conf.d/apc.ini
+34. a2enmod ssl
+35. a2enmod expires
+36. a2enmod rewrite
+37. a2enmod vhost_alias
+38. pico /etc/apache2/envvars
+39. Change:  
+    export APACHE\_RUN\_USER=www-data  
+    export APACHE\_RUN\_GROUP=www-data
+40. to:  
+    export APACHE\_RUN\_USER=git  
+    export APACHE\_RUN\_GROUP=git
+41. pico /etc/apache2/sites-available/default
+42. Change  
+    <VirtualHost *:80>
+43. to:  
+    <VirtualHost x.x.x.x:80>
+    Where x.x.x.x is the server’s IP Address
+44. pico /etc/apache2/ports.conf
+45. Change:  
+    NameVirtualHost *:80
+46. to:  
+    NameVirtualHost x.x.x.x:80  
+    Where x.x.x.x is the server’s IP Address
+47. Add:  
+    NameVirtualHost x.x.x.x:443  
+    After:  
+    Listen 443
+48. service apache2 restart
+49. pear channel-discover pear.drush.org
+50. pear install drush/drush
+51. drush
+52. Running once downloads required drush libraries
+53. mysql -u root -p -e "CREATE USER $SQL_USERNAME;"
+54. Change username and password in above SQL.
+55. Requires MySQL root password created during installation
+56. mysql -u root -p -e "GRANT ALL on \*.\* TO '$SQL\_USERNAME'@'localhost' IDENTIFIED BY '$SQL\_PASSWORD';"
+57. git clone git@github.com:chapter-three/creo-server.git /usr/local/
+58. Make sure you have access to clone this repo
+59. Follow steps to setup creo in README.mkd
+60. ssh-keygen
+61. cp ~/.ssh/id_rsa.pub /tmp/root.pub
+62. mkdir /var/www/projects
+63. chown git:git /var/www/projects
+64. su - git
+65. mkdir bin
+66. git clone git://github.com/sitaramc/gitolite
+67. gitolite/install -ln
+68. bin/gitolite setup -pk /tmp/root.pub
+69. This assumes $HOME/bin is in your $PATH
+70. ssh-keyscan -t rsa localhost &gt;&gt; ~/.ssh/known_hosts
+71. Approves the localhost key, so there isn’t git authentication errors.
+72. touch hooks-go-in-.gitolite-hooks-common
+73. So you don’t forget!
+74. logout
+75. cp /usr/local/creo-server/extra/gitolite-post-receive /home/git/.gitolite/hooks/common/post-receive
+76. Add the creo-server post-receive hook
+77. chown git:git /home/git/.gitolite/hooks/common/post-receive
+78. git clone git@localhost:gitolite-admin
+79. cd gitolite-admin/conf
+80. pico gitolite.conf
+81. Insert the following in the first &amp; second line:  
+    @admin = root  
+    @users = root
+82. Change:  
+    repo gitolite-admin  
+        RW+     =   root
+    to:  
+    repo gitolite-admin  
+        RW+     =   @admin
+83. Add the following to the last line:   
+    include "repos/*.conf"
+84. Save and close the file.
+85. mkdir repos
+86. git config --global color.diff always
+87. git config --global user.name "Server root"
+88. git config --global user.email "root@$DOMAIN"
+89. git add .
+90. git commit -m ‘Initial gitolite setup’
+91. git push
+92. ufw allow 22
+93. Allow SSH through firewall
+94. ufw allow 80
+95. Allow HTTP through firewall
+96. ufw allow 443
+97. Allow HTTPS through firewall
+98. ufw enable
+99. creo
+100. Test the creo script. Once all errors are handled, you can attempt to import a site.
+101. wget 
+102. Download and run for MySQL optimization recommendations
+103. Add the following to my.cnf: innodb_flush_log_at_trx_commit == 1 http://drupal.org/node/817398
+104. Basically done!
