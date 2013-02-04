@@ -20,7 +20,8 @@ Requires significant server configuration. Review INSTALL.mkd.
 Example Usage
 -------------
 Create a project from an existing project:
-`sudo creo create PROJECT -t OLD_PROJECT
+
+`sudo creo create PROJECT -t OLD_PROJECT`
 
 Import an existing project repo (make the code into a repo, and don't add Drupal files directory):
 `sudo creo import PROJECT -i /root/PROJECT-REPO`
@@ -28,7 +29,9 @@ Import an existing project repo (make the code into a repo, and don't add Drupal
 `sudo chown git:git -R /var/www/projects/PROJECT/sites/default/`
 `mysql PROJECT < PROJECT.sql`
 
-Make a code sandbox in /home/user/public_html to be available at http://project.user.dev.example.com:
+Make a code sandbox (using primary database, and a symbolic link to files) at /home/user/public_html 
+available at http://project.user.dev.example.com:
+
 `creo sandbox PROJECT`
 
 Required Software
