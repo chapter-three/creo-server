@@ -77,15 +77,19 @@ Installation
 
   * Change the Tomcat server port from the default 8080 to 8983(or any other port of your choice)
     `pico /etc/tomcat6/server.xml` and change:
+
     \<Connector port="8080" protocol="HTTP/1.1"
                connectionTimeout="20000"
                URIEncoding="UTF-8"
                redirectPort="8443" /\>
+
      To:
+
     \<Connector port="8983" protocol="HTTP/1.1"
                connectionTimeout="20000"
                URIEncoding="UTF-8"
                redirectPort="8443" /\>
+
   * Download the Apachesolr (or Search API Solr search) from Drupal.org:
     `wget http://ftp.drupal.org/files/projects/apachesolr-7.x-1.x-dev.tar.gz`
   * `tar zxf apachesolr-7.x-1.x-dev.tar.gz`
