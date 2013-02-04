@@ -65,3 +65,10 @@ TOMCAT_PORT=8983
 
 # The directory name of the template for new projects (Must exist in all three directories)
 SOLR_TEMPLATE=TEMPLATE
+
+# The Tomcat User
+TOMCAT_USER=tomcat6
+
+# The Tomcat Group
+TOMCAT_GROUP=tomcat6
+

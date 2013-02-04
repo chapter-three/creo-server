@@ -5,6 +5,8 @@ case "$COMMAND" in
   create_solr)
     set_message "Creating Solr instance"
     cp -ar $SOLR_DATA_DIR/$SOLR_TEMPLATE $SOLR_DATA_DIR/$PROJECT
+    # Setting correct permissions
+    chown -R $TOMCAT_USER:$TOMCAT_GROUP $SOLR_DATA_DIR/$PROJECT
     cp -a $TOMCAT_LOCALHOST_DIR/$SOLR_TEMPLATE.xml $TOMCAT_LOCALHOST_DIR/$PROJECT.xml
     sed -i "s/$SOLR_TEMPLATE/$PROJECT/" $TOMCAT_LOCALHOST_DIR/$PROJECT.xml
     cp -ar $TOMCAT_WEBAPP_DIR/$SOLR_TEMPLATE $TOMCAT_WEBAPP_DIR/$PROJECT
