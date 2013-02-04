@@ -70,9 +70,11 @@ Installation
   * `cp -aR apache-solr-3.6.1/example/solr/* /var/solr/TEMPLATE`
   * `pico /etc/tomcat6/Catalina/localhost/TEMPLATE.xml` (use vim/vi if you want!)
   * Paste in the following and save (Save CTRL-X then enter):
+
     <Context docBase="/var/lib/tomcat6/webapps/solr.war" debug="0" crossContext="true" >
       <Environment name="solr/home" type="java.lang.String" value="/var/solr/TEMPLATE" override="true" />
-    </Context>
+    </Context>`
+
   * Change the Tomcat server port from the default 8080 to 8983(or any other port of your choice)
     `pico /etc/tomcat6/server.xml` and change:
     <Connector port="8080" protocol="HTTP/1.1"
