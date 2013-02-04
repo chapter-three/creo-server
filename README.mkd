@@ -11,11 +11,11 @@ Chef/Ansible/etc for the initial configuration. But you know... time.
 
 There are many security considerations with using this. This is NOT for client production hosting, this is
 for development only. Only employees and contractors should have SSH access to a server running this script. Very
-few users should have sudo.
+few users should have sudo to be the people adding/importing projects, most users will just make sandboxes.
 
 In the future, it should support additional security permissions and meta data database storage for an external API.
 
-Requires significant server configuration. Review INSTALL.mkd.
+Requires significant server configuration. Review INSTALL.mkd for setup from a bare Ubuntu install.
 
 Example Usage
 -------------
