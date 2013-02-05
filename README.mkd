@@ -5,15 +5,13 @@ A barebones Drupal 6/7 development server management script using Apache, MySQL,
 
 Description
 -----------
-Creo is an updated and re-organized version of the original C3 dev project management script. The script works well
-for many use cases, but a lot of work is needed. Ideally it would be rewritten in PHP/Ruby/Python and use
-Chef/Ansible/etc for the initial configuration. But you know... time.
+This script simplifies the process of adding a project to your development server. For a new or imported project:
+It creates a Gitolite-controlled repo, imports the code, adds an Apache configuration, creates a MySQL database, and creates 
+a Solr instance. Given a site archive, you can generally have a site imported and running within a minute.
 
-There are many security considerations with using this. This is NOT for client production hosting, this is
-for development only. Only employees and contractors should have SSH access to a server running this script. 
-Only a few users should have sudo for adding/importing projects, most users will simply make "sandboxes."
-
-Requires significant server configuration. Review INSTALL.mkd for setup from a bare Ubuntu install.
+For non-admin users: The script automates the process of creating a server-side project sandbox. Multiple devs can work
+on their own clone of the code while sharing (or not sharing) the database or site files. Pushing to the primary repo
+updates the main dev site automatically. Developers are free to simply clone the repo and work on their local machines also.
 
 Example Usage
 -------------
@@ -22,9 +20,13 @@ Create a project from an existing project:
 `sudo creo create PROJECT -t OLD_PROJECT`
 
 Import an existing project repo (make the code into a repo, and don't add Drupal files directory):
+
 `sudo creo import PROJECT -i /root/PROJECT-REPO`
+
 `sudo tar zxf PROJECT-FILES.tar.gz -C /var/www/projects/PROJECT/sites/default/`
+
 `sudo chown git:git -R /var/www/projects/PROJECT/sites/default/`
+
 `mysql PROJECT < PROJECT.sql`
 
 Make a code sandbox (using primary database, and a symbolic link to files) at /home/user/public_html 
@@ -44,8 +46,21 @@ Required Software
 
 Notes
 -----
-This script was designed/tested on Debian 6 Squeeze, and also tested on Ubuntu 10.04 Lucid Lynx.
-It may be updated in the future to work with RHEL and CentOS.
+Creo is an updated and re-organized version of the original C3 dev project management script. The script works well
+for many use cases, but a lot of work is needed. Ideally it would be rewritten in PHP/Ruby/Python and use
+Chef/Ansible/etc for the initial configuration. But you know... time.
+
+There are many security considerations with using this. This is NOT for client production hosting, this is
+for development only. Only employees and contractors should have SSH access to a server running this script. 
+Few users should have sudo for adding/importing projects, most users will simply make "sandboxes."
+
+Requires significant server configuration. Review INSTALL.mkd for setup from a bare Ubuntu install.
+
+This script was designed/tested on Debian 6 Squeeze and Ubuntu 10.04/12.04. It may be updated in the future to 
+work with RHEL and CentOS.
+
+This works well with Pantheon, but currently requires an additional symbolic link to work with Acquia due to
+the docroot in the repo.
 
 Installation
 ------------
